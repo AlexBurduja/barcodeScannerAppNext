@@ -112,21 +112,6 @@ a {
   align-items: center;
 }
 
-.video-container {
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.video-preview {
-  width: 100%;
-  height: auto;
-}
-
-.canvas-preview {
-  display: none; /* Hide the canvas by default */
-}
-
-button {
-  margin-top: 10px;
+canvas {
+  display: none;
 }
