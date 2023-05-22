@@ -59,7 +59,7 @@ const BarcodeForm = ({ onScan }) => {
   }, [onScan]);
 
   return <div className="barcode-scanner">
-    <video ref={videoRef} autoPlay playsInline />
+    <video ref={videoRef} autoPlay playsInline muted/>
   </div>;
 };
 
