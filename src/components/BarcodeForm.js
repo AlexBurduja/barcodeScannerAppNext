@@ -3,11 +3,12 @@ import Quagga from '@ericblade/quagga2';
 
 const BarcodeForm = ({ onScan }) => {
   const videoRef = useRef();
+  const canvasRef = useRef();
 
-  const [selfie, setSelfie ] = useState('user')
+  const [selfie, setSelfie] = useState('user');
 
-  function switchCamera(){
-    selfie === 'user' ? setSelfie('environment') : setSelfie('user')
+  function switchCamera() {
+    selfie === 'user' ? setSelfie('environment') : setSelfie('user');
   }
 
   useEffect(() => {
@@ -18,11 +19,11 @@ const BarcodeForm = ({ onScan }) => {
         inputStream: {
           type: 'LiveStream',
           name: 'Live',
-          target: document.querySelector('.barcode-scanner'),
+          target: videoRef.current,
           constraints: {
-            width: {min: 640},
-            height: {min: 480},
-            aspectRatio: {min: 1, max: 2},
+            width: { min: 640 },
+            height: { min: 480 },
+            aspectRatio: { min: 1, max: 2 },
             facingMode: selfie
           },
         },
@@ -39,7 +40,7 @@ const BarcodeForm = ({ onScan }) => {
           console.error('Error initializing Quagga:', err);
           return;
         }
-        
+
         scannerRef = Quagga.start();
       }
     );
@@ -55,17 +56,18 @@ const BarcodeForm = ({ onScan }) => {
         Quagga.stop();
       }
     };
-  }, [onScan , selfie]);
+  }, [onScan, selfie]);
 
   return (
-    <>
-      <div className="barcode-scanner">
+    <div className="barcode-scanner">
+      <div className="video-container">
         <video ref={videoRef} className="video-preview" />
       </div>
+      <canvas ref={canvasRef} className="canvas-preview" />
 
-      <button onClick={switchCamera}>Hi</button>
-    </>
-  )
+      <button onClick={switchCamera}>Switch Camera</button>
+    </div>
+  );
 };
 
 export default BarcodeForm;

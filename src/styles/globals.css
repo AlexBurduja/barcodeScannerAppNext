@@ -106,11 +106,27 @@ a {
   }
 }
 
-.video-preview {
-  width: 100%;
-  height: 500px;
+.barcode-scanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* canvas.drawingBuffer{
-  height: 0;
-} */
+.video-container {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.video-preview {
+  width: 100%;
+  height: auto;
+}
+
+.canvas-preview {
+  display: none; /* Hide the canvas by default */
+}
+
+button {
+  margin-top: 10px;
+}
