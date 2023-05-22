@@ -50,7 +50,7 @@ const BarcodeForm = ({ onScan }) => {
         Quagga.stop();
       }
     };
-  }, [onScan]);
+  }, [onScan , selfie]);
 
   return (
     <>
