@@ -105,3 +105,9 @@ a {
     color-scheme: dark;
   }
 }
+
+.video-preview{
+  width: 90%;
+  height: 90%;
+  margin-left: 5%;
+}

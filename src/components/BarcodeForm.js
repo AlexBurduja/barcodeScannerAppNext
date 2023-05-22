@@ -47,7 +47,7 @@ const BarcodeForm = ({ onScan }) => {
   }, [onScan]);
 
   return <div className="barcode-scanner">
-    <video ref={videoRef} />
+    <video ref={videoRef} className='video-preview'/>
   </div>;
 };
 
