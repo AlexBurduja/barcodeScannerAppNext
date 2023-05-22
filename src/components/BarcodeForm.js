@@ -1,42 +1,53 @@
 import React, { useRef, useEffect } from 'react';
+import Quagga from '@ericblade/quagga2';
 
 const BarcodeForm = ({ onScan }) => {
-  const videoRef = useRef(null);
+  const videoRef = useRef();
 
   useEffect(() => {
-    const requestCameraAccess = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        videoRef.current.srcObject = stream; // Assign the stream to the video element
-      } catch (error) {
-        console.error('Error accessing camera:', error);
-      }
-    };
+    let scannerRef = null;
 
-    requestCameraAccess();
+    Quagga.init(
+      {
+        inputStream: {
+          type: 'LiveStream',
+          name: 'Live',
+          target: document.querySelector('.barcode-scanner'),
+          constraints: {
+            width: 640,
+            height: 480
+          },
+        },
+        decoder: {
+          readers: ['code_128_reader'], // or other supported barcode types
+        },
+      },
+      (err) => {
+        if (err) {
+          console.error('Error initializing Quagga:', err);
+          return;
+        }
+        
+        scannerRef = Quagga.start();
+      }
+    );
+
+    Quagga.onDetected((result) => {
+      if (result && result.codeResult && result.codeResult.code) {
+        onScan(result.codeResult.code);
+      }
+    });
 
     return () => {
-      // Stop the video stream when the component unmounts
-      const stream = videoRef.current.srcObject;
-      const tracks = stream?.getTracks() || [];
-      tracks.forEach((track) => track.stop());
+      if (scannerRef) {
+        Quagga.stop();
+      }
     };
-  }, []);
+  }, [onScan]);
 
-  const handleVideoLoadedMetadata = () => {
-    // Start the barcode scanning process when the video metadata is loaded
-    const video = videoRef.current;
-    video.play();
-
-    // Add any necessary event listeners or processing logic here
-    // For example, you can use Quagga to scan barcodes
-  };
-
-  return (
-    <div className="barcode-scanner">
-      <video ref={videoRef} onLoadedMetadata={handleVideoLoadedMetadata} autoPlay playsInline muted />
-    </div>
-  );
+  return <div className="barcode-scanner">
+    <video ref={videoRef} />
+  </div>;
 };
 
 export default BarcodeForm;
