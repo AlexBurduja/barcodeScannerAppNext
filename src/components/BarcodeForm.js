@@ -1,8 +1,14 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Quagga from '@ericblade/quagga2';
 
 const BarcodeForm = ({ onScan }) => {
   const videoRef = useRef();
+
+  const [selfie, setSelfie ] = useState('user')
+
+  function switchCamera(){
+    selfie === 'user' ? setSelfie('environment') : setSelfie('user')
+  }
 
   useEffect(() => {
     let scannerRef = null;
@@ -16,7 +22,7 @@ const BarcodeForm = ({ onScan }) => {
           constraints: {
             width: 1080,
             height: 1920,
-            facingMode: 'environment'
+            facingMode: selfie
           },
         },
         decoder: {
@@ -46,9 +52,15 @@ const BarcodeForm = ({ onScan }) => {
     };
   }, [onScan]);
 
-  return <div className="barcode-scanner">
-    <video ref={videoRef} className='video-preview'/>
-  </div>;
+  return (
+    <>
+      <div className="barcode-scanner">
+        <video ref={videoRef} className="video-preview" />
+      </div>
+
+      <button onClick={switchCamera}>Hi</button>
+    </>
+  )
 };
 
 export default BarcodeForm;

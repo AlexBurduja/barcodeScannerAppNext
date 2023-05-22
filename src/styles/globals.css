@@ -106,7 +106,11 @@ a {
   }
 }
 
-.video-preview{
-  width: 90%;
-  margin-left: 5%;
+.video-preview {
+  width: 100%;
+  height: 500px;
+}
+
+canvas.drawingBuffer{
+  height: 0;
 }
