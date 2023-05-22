@@ -26,7 +26,11 @@ const BarcodeForm = ({ onScan }) => {
           },
         },
         decoder: {
-          readers: ['code_128_reader'], // or other supported barcode types
+          readers: ['code_128_reader'],
+          debug: {
+            drawBoundingBox: true,
+            drawScanline: true,
+          }
         },
       },
       (err) => {
