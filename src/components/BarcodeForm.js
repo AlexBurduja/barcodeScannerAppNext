@@ -7,49 +7,37 @@ const BarcodeForm = ({ onScan }) => {
   useEffect(() => {
     let scannerRef = null;
 
-    const initQuagga = async () => {
-      try {
-        const cameras = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = cameras.filter((device) => device.kind === 'videoinput');
-        const constraints = {
-          width: 640,
-          height: 480,
-          deviceId: videoDevices[0].deviceId, // Specify the initial camera to use
-        };
-
-        Quagga.init(
-          {
-            inputStream: {
-              type: 'LiveStream',
-              name: 'Live',
-              target: videoRef.current,
-              constraints,
-            },
-            decoder: {
-              readers: ['code_128_reader'], // or other supported barcode types
-            },
+    Quagga.init(
+      {
+        inputStream: {
+          type: 'LiveStream',
+          name: 'Live',
+          target: document.querySelector('.barcode-scanner'),
+          constraints: {
+            width: 640,
+            height: 480,
+            facingMode: 'user'
           },
-          (err) => {
-            if (err) {
-              console.error('Error initializing Quagga:', err);
-              return;
-            }
-            
-            scannerRef = Quagga.start();
-          }
-        );
-
-        Quagga.onDetected((result) => {
-          if (result && result.codeResult && result.codeResult.code) {
-            onScan(result.codeResult.code);
-          }
-        });
-      } catch (error) {
-        console.error('Error accessing camera:', error);
+        },
+        decoder: {
+          readers: ['code_128_reader'], // or other supported barcode types
+        },
+      },
+      (err) => {
+        if (err) {
+          console.error('Error initializing Quagga:', err);
+          return;
+        }
+        
+        scannerRef = Quagga.start();
       }
-    };
+    );
 
-    initQuagga();
+    Quagga.onDetected((result) => {
+      if (result && result.codeResult && result.codeResult.code) {
+        onScan(result.codeResult.code);
+      }
+    });
 
     return () => {
       if (scannerRef) {
@@ -59,7 +47,7 @@ const BarcodeForm = ({ onScan }) => {
   }, [onScan]);
 
   return <div className="barcode-scanner">
-    <video ref={videoRef} autoPlay playsInline muted/>
+    <video ref={videoRef} />
   </div>;
 };
 
