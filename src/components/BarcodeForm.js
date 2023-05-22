@@ -59,6 +59,9 @@ const BarcodeForm = ({ onScan }) => {
   return (
     <>
       <div className="barcode-scanner">
+        <div className="video-container">
+          <video ref={videoRef} className="video-preview" />
+        </div>
       </div>
 
       <button onClick={switchCamera}>Hi</button>
