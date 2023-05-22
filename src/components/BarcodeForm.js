@@ -16,7 +16,7 @@ const BarcodeForm = ({ onScan }) => {
           constraints: {
             width: 640,
             height: 480,
-            facingMode: 'user'
+            facingMode: 'environment'
           },
         },
         decoder: {
