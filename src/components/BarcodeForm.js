@@ -20,8 +20,8 @@ const BarcodeForm = ({ onScan }) => {
           name: 'Live',
           target: document.querySelector('.barcode-scanner'),
           constraints: {
-            width: 640,
-            height: 480,
+            width: 1920,
+            height: 1080,
             aspectRatio: 2,
             facingMode: selfie
           },
