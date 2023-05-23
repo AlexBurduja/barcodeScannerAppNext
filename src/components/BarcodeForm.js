@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db } from './FirebaseConfig';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 
 const BarcodeForm = ({ onScan }) => {
   const videoRef = useRef();
@@ -44,8 +44,24 @@ const BarcodeForm = ({ onScan }) => {
 
     Quagga.onDetected((result) => {
       if (result && result.codeResult && result.codeResult.code) {
-        setBarcode(result.codeResult.code)
+        setBarcode(result.codeResult.code);
         onScan(result.codeResult.code);
+    
+        const ref = doc(db, 'barcodes', result.codeResult.code);
+    
+        getDoc(ref)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              setWorker(snapshot.data());
+              
+            } else {
+              const setRef = doc(db, 'barcodes');
+              setDoc(setRef, result.codeResult.code);
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching document:', error);
+          });
       }
     });
 
@@ -57,6 +73,8 @@ const BarcodeForm = ({ onScan }) => {
   }, [onScan , selfie]);
 
   const [existingBarcodes, setExistingBarcodes] = useState([])
+  
+  const [worker, setWorker] = useState([])
 
   useEffect(() => {
     const getDocsFromCol = async () => {
@@ -72,12 +90,19 @@ const BarcodeForm = ({ onScan }) => {
     getDocsFromCol();
   }, []);
 
-  function retrieveCodesFirebase(){
-    const ref = doc(db, 'barcodes')
+    const retrieveCodesFirebase = async (code) =>  {
+      const ref = doc(db, `barcodes/1234567890`)
+  
+      const docs = await getDoc(ref)
+      const data = docs.data();
+    
+      setWorker(data)
+    }
 
-  }
+    // retrieveCodesFirebase();
+  
 
-  console.log(existingBarcodes)
+
   return (
     <>
       <div className="barcode-scanner">
@@ -86,8 +111,14 @@ const BarcodeForm = ({ onScan }) => {
         </div>
       </div>
 
+    <div>
+      <p>{worker.nume}</p>
+      <p>{worker.varsta}</p>
+      <p>{worker.job}</p>
+    </div>
+
       <button onClick={switchCamera}>Hi</button>
-      <button onClick={retrieveCodesFirebase}>Create</button>
+      {/* <button onClick={retrieveCodesFirebase}>Create</button> */}
     </>
   )
 };
