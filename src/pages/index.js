@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import BarcodeForm from '../components/BarcodeForm';
 
-const App = () => {
+const Home = () => {
   const [scannedCode, setScannedCode] = useState('');
 
   const handleScan = (code) => {
     setScannedCode(code);
   };
+
+  console.log(scannedCode)
 
   return (
     <div className="app">
@@ -17,4 +19,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;

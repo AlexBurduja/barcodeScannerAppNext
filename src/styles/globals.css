@@ -114,6 +114,7 @@ a {
 
 .video-container {
   width: 90%;
+  max-width: 1000px;
   margin-bottom: 10px;
   position: relative;
 }
@@ -121,8 +122,8 @@ a {
 .video-preview {
   width: 100%;
   height: auto;
-  max-width: 100%; /* Ensure the video doesn't exceed its intrinsic width */
-  object-fit: contain; /* Maintain aspect ratio and fit within the container */
+  max-width: 100%; 
+  object-fit: contain;
 }
 
 .canvas-preview {
