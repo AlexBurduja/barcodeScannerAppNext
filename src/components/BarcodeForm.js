@@ -104,29 +104,27 @@ const BarcodeForm = ({ onScan }) => {
 
   const [employeeData ,setEmployeeData] = useState([])
 
-  useEffect(() => {
-    const folderPath = `${barcode}`;
+//   useEffect(() => {
 
-listAll(storage.child(barcode))
-  .then((res) => {
-    res.items.forEach((itemRef) => {
-      // Retrieve download URL for each item
-      getDownloadURL(itemRef)
-        .then((downloadURL) => {
-          console.log(downloadURL);
-        })
-        .catch((error) => {
-          // Handle any errors that occur while retrieving the download URL
-          console.error('Error getting download URL:', error);
-        });
-    });
-  })
-  .catch((error) => {
-    // Handle any errors that occur while listing the files
-    console.error('Error listing files:', error);
-  });
+// listAll(storage.child(barcode))
+//   .then((res) => {
+//     res.items.forEach((itemRef) => {
+//       getDownloadURL(itemRef)
+//         .then((downloadURL) => {
+//           console.log(downloadURL);
+//         })
+//         .catch((error) => {
+          
+//           console.error('Error getting download URL:', error);
+//         });
+//     });
+//   })
+//   .catch((error) => {
+//     // Handle any errors that occur while listing the files
+//     console.error('Error listing files:', error);
+//   });
 
-  }, [barcode]);
+//   }, [barcode]);
 
     const retrieveCodesFirebase = async (code) =>  {
       const ref = doc(db, `barcodes/1234567890`)
