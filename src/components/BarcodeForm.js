@@ -104,27 +104,42 @@ const BarcodeForm = ({ onScan }) => {
 
   const [employeeData ,setEmployeeData] = useState([])
 
-//   useEffect(() => {
+  useEffect(() => {
+    if (barcode) {
+      const childRef = ref(storage, barcode);
+  
+      listAll(childRef)
+        .then((res) => {
+          setWorker((prevWorker) => {
+            const updatedWorker = { ...prevWorker };
+  
+            res.items.forEach((itemRef) => {
+              const itemName = itemRef.name;
+  
+              getDownloadURL(itemRef)
+                .then((downloadURL) => {
+                  updatedWorker[itemName] = downloadURL;
+                  // Call setWorker after all items are processed
+                  if (itemRef === res.items[res.items.length - 1]) {
+                    setWorker(updatedWorker);
+                  }
+                })
+                .catch((error) => {
+                  console.error('Error getting download URL:', error);
+                });
+            });
+  
+            return updatedWorker;
+          });
+        })
+        .catch((error) => {
+          console.error('Error listing files:', error);
+        });
+    }
+  }, [barcode]);
+  
+  console.log(worker)
 
-// listAll(storage.child(barcode))
-//   .then((res) => {
-//     res.items.forEach((itemRef) => {
-//       getDownloadURL(itemRef)
-//         .then((downloadURL) => {
-//           console.log(downloadURL);
-//         })
-//         .catch((error) => {
-          
-//           console.error('Error getting download URL:', error);
-//         });
-//     });
-//   })
-//   .catch((error) => {
-//     // Handle any errors that occur while listing the files
-//     console.error('Error listing files:', error);
-//   });
-
-//   }, [barcode]);
 
     const retrieveCodesFirebase = async (code) =>  {
       const ref = doc(db, `barcodes/1234567890`)
@@ -175,13 +190,11 @@ const BarcodeForm = ({ onScan }) => {
 
     const [value, setValue] = useState(undefined)
 
-    console.log(value)
     function changeValue(event){
       setValue(event.target.value)
     }
 
-    console.log(value)
-
+    console.log(worker)
   return (
     <>
       <div className="barcode-scanner">
@@ -194,6 +207,8 @@ const BarcodeForm = ({ onScan }) => {
       <p>{worker.nume}</p>
       <p>{worker.varsta}</p>
       <p>{worker.job}</p>
+      <iframe src={worker.ci} title='workerCi'></iframe>
+      <iframe src={worker.contract} title='workerContract' width={200} height={200}></iframe>
     </div>
 
       <button onClick={switchCamera}>Hi</button>
