@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db, storage } from './FirebaseConfig';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
+import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
 
 const BarcodeForm = ({ onScan }) => {
   const videoRef = useRef();
@@ -56,6 +56,7 @@ const BarcodeForm = ({ onScan }) => {
     
         setBarcode(code);
         onScan(code);
+        setWorker([])
     
         const ref = doc(db, 'barcodes', code);
     
@@ -137,18 +138,24 @@ const BarcodeForm = ({ onScan }) => {
         });
     }
   }, [barcode]);
-  
+
   console.log(worker)
 
+    function deleteImagesOrPdfs (fileName){
+      const fileRef = ref(storage, `${barcode}/${fileName}`)
 
-    const retrieveCodesFirebase = async (code) =>  {
-      const ref = doc(db, `barcodes/1234567890`)
-  
-      const docs = await getDoc(ref)
-      const data = docs.data();
-    
-      setWorker(data)
-    }
+      deleteObject(fileRef)
+      .then(() => {
+        setWorker((prevWorker) => {
+          const updatedWorker = { ...prevWorker };
+          delete updatedWorker[fileName]
+          return updatedWorker;
+        });
+      })
+      .catch((error) => {
+        console.error('Error deleting file:', error)
+      });
+    };
 
     const [file, setFile] = useState('')
     const [percent, setPercent] = useState(0)
@@ -194,7 +201,6 @@ const BarcodeForm = ({ onScan }) => {
       setValue(event.target.value)
     }
 
-    console.log(worker)
   return (
     <>
       <div className="barcode-scanner">
@@ -208,7 +214,9 @@ const BarcodeForm = ({ onScan }) => {
       <p>{worker.varsta}</p>
       <p>{worker.job}</p>
       <iframe src={worker.ci} title='workerCi'></iframe>
+      <button onClick={() => deleteImagesOrPdfs('ci')} >DeleteCi</button>
       <iframe src={worker.contract} title='workerContract' width={200} height={200}></iframe>
+      <button onClick={() => deleteImagesOrPdfs('contract')}>DeleteContract</button>
     </div>
 
       <button onClick={switchCamera}>Hi</button>
