@@ -3,6 +3,7 @@ import Quagga from '@ericblade/quagga2';
 import { db, storage } from './FirebaseConfig';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
+import {IoMdReverseCamera} from 'react-icons/io'
 
 const BarcodeForm = () => {
   const videoRef = useRef(null);
@@ -113,6 +114,14 @@ const BarcodeForm = () => {
   
   const [worker, setWorker] = useState([])
 
+  const [isOpen, setIsOpen] = useState(false)
+
+  function openSection (section) {
+    setIsOpen(section === isOpen ? null : section)
+  }
+
+  console.log(isOpen)
+
   useEffect(() => {
     const getDocsFromCol = async () => {
       const ref = collection(db, 'barcodes');
@@ -218,13 +227,13 @@ const BarcodeForm = () => {
       )
     }
 
-    const [value, setValue] = useState(undefined)
+    const [value, setValue] = useState('ci')
 
     function changeValue(event){
       setValue(event.target.value)
     }
 
-    console.log(cameraOn)
+    // console.log(worker)
 
   return (
     <>
@@ -235,6 +244,7 @@ const BarcodeForm = () => {
       <div className="barcode-scanner">
         {cameraOn && 
         <div className="video-container"> 
+          <button onClick={switchCamera}><IoMdReverseCamera /></button>
         </div>
         }
       </div>
@@ -243,19 +253,20 @@ const BarcodeForm = () => {
       <p>{worker.nume}</p>
       <p>{worker.varsta}</p>
       <p>{worker.job}</p>
-      <iframe src={worker.ci} title='workerCi'></iframe>
-      <button onClick={() => deleteImagesOrPdfs('ci')} >DeleteCi</button>
-      <iframe src={worker.contract} title='workerContract' width={200} height={200}></iframe>
-      <button onClick={() => deleteImagesOrPdfs('contract')}>DeleteContract</button>
     </div>
 
-      <button onClick={switchCamera}>Hi</button>
+      
 
       <div>
         What to upload?
         <select name="languages" id="lang" onChange={changeValue}>
-          <option value="ci">Ci</option>
-          <option value="contract">Contract</option>
+          <option value="ci" >Ci</option>
+          <option value="contractDeMunca">Contract</option>
+          <option value="permis">Permis</option>
+          <option value="acteStudii">Acte Studii</option>
+          <option value="fisaPostului">Fisa Postului</option>
+          <option value="adeverintaMedicala">Adeverinta Medicala</option>
+          <option value="cazier">Cazier</option>
         </select>
         
       </div>
@@ -266,6 +277,85 @@ const BarcodeForm = () => {
       <button onClick={handleUpload}>Upload!</button>
       <p>{percent} &quot;% done&quot;</p>
     </div>
+
+
+    <div>
+      <p onClick={() => openSection('CI')}>CI</p>
+
+      {isOpen === 'CI' &&
+        <>
+          <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
+          <button onClick={() => deleteImagesOrPdfs('ci')} >DeleteCi</button>
+        </>
+      }
+    </div>
+
+    <div>
+      <p onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
+
+      {isOpen === 'contractDeMunca' &&
+        <>
+          <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
+          <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>DeleteContract</button>
+        </>
+      }
+    </div>
+    
+    <div>
+      <p onClick={() => openSection('permis')}>Permis</p>
+
+      {isOpen === 'permis' &&
+        <>
+          <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
+          <button onClick={() => deleteImagesOrPdfs('permis')}>DeleteContract</button>
+        </>
+      }
+    </div>
+    
+    <div>
+      <p onClick={() => openSection('acteStudii')}>Acte Studii</p>
+
+      {isOpen === 'acteStudii' &&
+        <>
+          <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
+          <button onClick={() => deleteImagesOrPdfs('acteStudii')}>DeleteContract</button>
+        </>
+      }
+    </div>
+    
+    <div>
+      <p onClick={() => openSection('acteStudii')}>Fisa Postului</p>
+
+      {isOpen === 'fisaPostului' &&
+        <>
+          <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
+          <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>DeleteContract</button>
+        </>
+      }
+    </div>
+    
+    <div>
+      <p onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
+
+      {isOpen === 'adeverintaMedicala' &&
+        <>
+          <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
+          <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>DeleteContract</button>
+        </>
+      }
+    </div>
+    
+    <div>
+      <p onClick={() => openSection('cazier')}>Cazier</p>
+
+      {isOpen === 'cazier' &&
+        <>
+          <iframe src={worker.cazier} title='workerContract' width={900} height={500}></iframe>
+          <button onClick={() => deleteImagesOrPdfs('cazier')}>DeleteContract</button>
+        </>
+      }
+    </div>
+
     </>
   )
 };

@@ -12,25 +12,33 @@ body{
 .video-container {
   width: 90%;
   max-width: 1000px;
-  margin-bottom: 10px;
   position: relative;
 }
 
-.video-preview {
+.video-container video {
   width: 100%;
   height: auto;
   max-width: 100%; 
   object-fit: contain;
 }
 
+.video-container button{
+  display: flex;
+  flex-direction: column;
+
+  z-index: 1;
+  cursor: pointer;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  bottom: 50px;
+  right: 50px;
+}
+
 video.video-preview{
   display: none;
 }
-
-button {
-  margin-top: 10px;
-}
-
 
 canvas{
   display: none;
