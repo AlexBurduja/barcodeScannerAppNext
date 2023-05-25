@@ -4,7 +4,7 @@ import { db, storage } from './FirebaseConfig';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
 
-const BarcodeForm = ({ onScan }) => {
+const BarcodeForm = () => {
   const videoRef = useRef(null);
 
   const [selfie, setSelfie ] = useState('user')
@@ -74,9 +74,11 @@ const BarcodeForm = ({ onScan }) => {
           console.error('Invalid barcode code:', code);
           return; // or handle the invalid code accordingly
         }
+
+        Quagga.stop();
+        setCameraOn(false)
     
         setBarcode(code);
-        onScan(code);
         setWorker([])
     
         const ref = doc(db, 'barcodes', code);
@@ -103,7 +105,7 @@ const BarcodeForm = ({ onScan }) => {
         Quagga.stop();
       }
     };
-  }, [onScan , startScanner, cameraOn]);
+  }, [startScanner, cameraOn]);
 
   const [camera, setCamera] = useState(false)
 
@@ -226,6 +228,7 @@ const BarcodeForm = ({ onScan }) => {
 
   return (
     <>
+    {barcode}
 
     <button onClick={toggleCamera}>{cameraOn ? 'Turn off' : 'Turn on'} </button>
 
