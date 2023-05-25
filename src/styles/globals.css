@@ -33,7 +33,11 @@ body{
   border: none;
   font-size: 30px;
   bottom: 50px;
-  right: 50px;
+  right: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+
+  color: rgba(255,255,255,0.8);
 }
 
 video.video-preview{
