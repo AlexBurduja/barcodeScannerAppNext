@@ -14,7 +14,7 @@ const Home = () => {
     <div className="app">
       <h1>Barcode Scanner</h1>
       {scannedCode && <p>Scanned Code: {scannedCode}</p>}
-      <BarcodeForm onScan={handleScan} />
+      <BarcodeForm />
     </div>
   );
 };

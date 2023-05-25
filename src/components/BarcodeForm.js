@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db, storage } from './FirebaseConfig';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
 
 const BarcodeForm = ({ onScan }) => {
-  const videoRef = useRef();
+  const videoRef = useRef(null);
 
   const [selfie, setSelfie ] = useState('user')
   const [barcode, setBarcode] = useState('')
@@ -13,24 +13,24 @@ const BarcodeForm = ({ onScan }) => {
   function switchCamera(){
     selfie === 'user' ? setSelfie('environment') : setSelfie('user')
   }
-  
-  useEffect(() => {
-    let scannerRef = null;
 
+  const [cameraOn, setCameraOn] = useState(true);
+
+  const startScanner = useCallback(() => {
     Quagga.init(
       {
         inputStream: {
           type: 'LiveStream',
           name: 'Live',
-          target: document.querySelector('.barcode-scanner'),
+          target: document.querySelector('.video-container'), // Use the videoRef to target the video element
           constraints: {
             width: 1920,
             height: 1080,
-            facingMode: selfie
+            facingMode: selfie,
           },
         },
         decoder: {
-          readers: ['code_128_reader']
+          readers: ['code_128_reader'],
         },
       },
       (err) => {
@@ -38,10 +38,31 @@ const BarcodeForm = ({ onScan }) => {
           console.error('Error initializing Quagga:', err);
           return;
         }
-        
-        scannerRef = Quagga.start();
+
+        Quagga.start();
       }
     );
+  }, [selfie]);
+
+  const toggleCamera = useCallback(() => {
+    setCameraOn((prevCameraOn) => {
+      if (prevCameraOn) {
+        Quagga.stop(); // Turn off the camera
+      } else {
+        startScanner(); // Turn on the camera
+      }
+      return !prevCameraOn; // Toggle the camera status
+    });
+  }, [startScanner]);
+  
+  useEffect(() => {
+    let scannerRef = null;
+
+    if (cameraOn) {
+      startScanner(); // Start the scanner if cameraOn is true
+    } else {
+      Quagga.stop(); // Stop the scanner if cameraOn is false
+    }
 
     Quagga.onDetected((result) => {
       if (result && result.codeResult && result.codeResult.code) {
@@ -76,14 +97,15 @@ const BarcodeForm = ({ onScan }) => {
           });
       }
     });
-    
 
     return () => {
       if (scannerRef) {
         Quagga.stop();
       }
     };
-  }, [onScan , selfie]);
+  }, [onScan , startScanner, cameraOn]);
+
+  const [camera, setCamera] = useState(false)
 
   const [existingBarcodes, setExistingBarcodes] = useState([])
   
@@ -103,7 +125,6 @@ const BarcodeForm = ({ onScan }) => {
     getDocsFromCol();
   }, []);
 
-  const [employeeData ,setEmployeeData] = useState([])
 
   useEffect(() => {
     if (barcode) {
@@ -201,12 +222,18 @@ const BarcodeForm = ({ onScan }) => {
       setValue(event.target.value)
     }
 
+    console.log(cameraOn)
+
   return (
     <>
+
+    <button onClick={toggleCamera}>{cameraOn ? 'Turn off' : 'Turn on'} </button>
+
       <div className="barcode-scanner">
-        <div className="video-container">
-          <video ref={videoRef} className="video-preview" />
+        {cameraOn && 
+        <div className="video-container"> 
         </div>
+        }
       </div>
 
     <div>
