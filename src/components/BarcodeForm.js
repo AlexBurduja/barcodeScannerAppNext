@@ -236,127 +236,131 @@ const BarcodeForm = () => {
     // console.log(worker)
 
   return (
-    <>
-    {barcode}
+    <section className='bigMainSection'>
+      <div className='divCenter'>
+        {barcode}
+      </div>
 
-    <button onClick={toggleCamera}>{cameraOn ? 'Turn off' : 'Turn on'} </button>
-
-      <div className="barcode-scanner">
-        {cameraOn && 
-        <div className="video-container"> 
-          <button onClick={switchCamera}><IoMdReverseCamera /></button>
+        <div className="barcode-scanner">
+          {cameraOn && 
+          <div className="video-container"> 
+            <button onClick={switchCamera}><IoMdReverseCamera /></button>
+          </div>
+          }
         </div>
+
+      <div className='divCenter'>
+        <button className='turnOffOnButton' onClick={toggleCamera}>{cameraOn ? 'Turn off' : 'Turn on'} </button>
+      </div>
+
+      <div>
+        <p>{worker.nume}</p>
+        <p>{worker.varsta}</p>
+        <p>{worker.job}</p>
+      </div>
+
+        
+
+        <div>
+          What to upload?
+          <select name="languages" id="lang" onChange={changeValue}>
+            <option value="ci" >Ci</option>
+            <option value="contractDeMunca">Contract</option>
+            <option value="permis">Permis</option>
+            <option value="acteStudii">Acte Studii</option>
+            <option value="fisaPostului">Fisa Postului</option>
+            <option value="adeverintaMedicala">Adeverinta Medicala</option>
+            <option value="cazier">Cazier</option>
+          </select>
+          
+        </div>
+
+      <div>
+        <input type='file' name='ci' id='ci' onChange={handleChange}></input>
+        
+        <button onClick={handleUpload}>Upload!</button>
+        <p>{percent} &quot;% done&quot;</p>
+      </div>
+
+
+      <div>
+        <p onClick={() => openSection('CI')}>CI</p>
+
+        {isOpen === 'CI' &&
+          <>
+            <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
+            <button onClick={() => deleteImagesOrPdfs('ci')} >DeleteCi</button>
+          </>
         }
       </div>
 
-    <div>
-      <p>{worker.nume}</p>
-      <p>{worker.varsta}</p>
-      <p>{worker.job}</p>
-    </div>
-
-      
-
       <div>
-        What to upload?
-        <select name="languages" id="lang" onChange={changeValue}>
-          <option value="ci" >Ci</option>
-          <option value="contractDeMunca">Contract</option>
-          <option value="permis">Permis</option>
-          <option value="acteStudii">Acte Studii</option>
-          <option value="fisaPostului">Fisa Postului</option>
-          <option value="adeverintaMedicala">Adeverinta Medicala</option>
-          <option value="cazier">Cazier</option>
-        </select>
-        
+        <p onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
+
+        {isOpen === 'contractDeMunca' &&
+          <>
+            <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>DeleteContract</button>
+          </>
+        }
+      </div>
+      
+      <div>
+        <p onClick={() => openSection('permis')}>Permis</p>
+
+        {isOpen === 'permis' &&
+          <>
+            <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('permis')}>DeleteContract</button>
+          </>
+        }
+      </div>
+      
+      <div>
+        <p onClick={() => openSection('acteStudii')}>Acte Studii</p>
+
+        {isOpen === 'acteStudii' &&
+          <>
+            <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>DeleteContract</button>
+          </>
+        }
+      </div>
+      
+      <div>
+        <p onClick={() => openSection('acteStudii')}>Fisa Postului</p>
+
+        {isOpen === 'fisaPostului' &&
+          <>
+            <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>DeleteContract</button>
+          </>
+        }
+      </div>
+      
+      <div>
+        <p onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
+
+        {isOpen === 'adeverintaMedicala' &&
+          <>
+            <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>DeleteContract</button>
+          </>
+        }
+      </div>
+      
+      <div>
+        <p onClick={() => openSection('cazier')}>Cazier</p>
+
+        {isOpen === 'cazier' &&
+          <>
+            <iframe src={worker.cazier} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('cazier')}>DeleteContract</button>
+          </>
+        }
       </div>
 
-    <div>
-      <input type='file' name='ci' id='ci' onChange={handleChange}></input>
-      
-      <button onClick={handleUpload}>Upload!</button>
-      <p>{percent} &quot;% done&quot;</p>
-    </div>
-
-
-    <div>
-      <p onClick={() => openSection('CI')}>CI</p>
-
-      {isOpen === 'CI' &&
-        <>
-          <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
-          <button onClick={() => deleteImagesOrPdfs('ci')} >DeleteCi</button>
-        </>
-      }
-    </div>
-
-    <div>
-      <p onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
-
-      {isOpen === 'contractDeMunca' &&
-        <>
-          <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
-          <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>DeleteContract</button>
-        </>
-      }
-    </div>
-    
-    <div>
-      <p onClick={() => openSection('permis')}>Permis</p>
-
-      {isOpen === 'permis' &&
-        <>
-          <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
-          <button onClick={() => deleteImagesOrPdfs('permis')}>DeleteContract</button>
-        </>
-      }
-    </div>
-    
-    <div>
-      <p onClick={() => openSection('acteStudii')}>Acte Studii</p>
-
-      {isOpen === 'acteStudii' &&
-        <>
-          <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
-          <button onClick={() => deleteImagesOrPdfs('acteStudii')}>DeleteContract</button>
-        </>
-      }
-    </div>
-    
-    <div>
-      <p onClick={() => openSection('acteStudii')}>Fisa Postului</p>
-
-      {isOpen === 'fisaPostului' &&
-        <>
-          <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-          <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>DeleteContract</button>
-        </>
-      }
-    </div>
-    
-    <div>
-      <p onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
-
-      {isOpen === 'adeverintaMedicala' &&
-        <>
-          <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-          <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>DeleteContract</button>
-        </>
-      }
-    </div>
-    
-    <div>
-      <p onClick={() => openSection('cazier')}>Cazier</p>
-
-      {isOpen === 'cazier' &&
-        <>
-          <iframe src={worker.cazier} title='workerContract' width={900} height={500}></iframe>
-          <button onClick={() => deleteImagesOrPdfs('cazier')}>DeleteContract</button>
-        </>
-      }
-    </div>
-
-    </>
+    </section>
   )
 };
 
