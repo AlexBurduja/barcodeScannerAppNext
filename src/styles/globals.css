@@ -1,3 +1,57 @@
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html, body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
@@ -93,5 +147,54 @@ canvas{
   align-items: center;
 }
 
-.fileUploadSelector select{
+.acteSection{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.acteSection p{
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scale: 1;
+}
+
+.acteSection p:hover{
+  background-color: rgba(255,255,255,0.8);
+  color: black;
+  scale: 1.1;
+}
+
+.acteSection div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.acteSection div button {
+  width: 200px;
+  height: 50px;
+  font-weight: bold;
+  color: red;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.acteSection div iframe{
+  width: 80%;
+  height: 600px;
 }

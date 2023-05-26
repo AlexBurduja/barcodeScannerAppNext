@@ -237,7 +237,7 @@ const Home = () => {
 
   return (
     <section className='bigMainSection'>
-
+      <h1>Baza De Date Angajati (Mabis Wood Eko)</h1>
 
       <div className='divCenter'>
         {barcode}
@@ -252,16 +252,8 @@ const Home = () => {
         </div>
 
       <div className='divCenter'>
-        <button className='turnOffOnButton' onClick={toggleCamera}>{cameraOn ? 'Turn off' : 'Turn on'} </button>
+        <button className='turnOffOnButton' onClick={toggleCamera}>{cameraOn ? 'Stop Scanning' : 'Scan'} </button>
       </div>
-
-      <div>
-        <p>{worker.nume}</p>
-        <p>{worker.varsta}</p>
-        <p>{worker.job}</p>
-      </div>
-
-        
 
         <div className='fileUploadSelector'>
           Alege tipul de fisier pe care vrei sa il incarci din lista de mai jos, dupa care apasa pe &quot;Choose File&quot;, alege din calculator fisierul pe care doresti sa il incarci si apoi apasa pe &quot;Upload!&quot; !
@@ -275,90 +267,98 @@ const Home = () => {
             <option value="cazier">Cazier</option>
           </select>
           
-        <input type='file' name='ci' id='ci' onChange={handleChange}></input>
+        <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
         
         <button onClick={handleUpload}>Upload!</button>
-        <p>{percent} &quot;% done&quot;</p>
+
         </div>
 
-
-
       <div>
-        <p onClick={() => openSection('CI')}>CI</p>
+        <p>{worker.nume}</p>
+        <p>{worker.varsta}</p>
+        <p>{worker.job}</p>
+      </div>
+
+    {barcode &&
+    <section className='acteSection'>
+      <p onClick={() => openSection('CI')}>C.I.</p>
+      <div>
 
         {isOpen === 'CI' &&
           <>
             <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
-            <button onClick={() => deleteImagesOrPdfs('ci')} >DeleteCi</button>
+            <button onClick={() => deleteImagesOrPdfs('ci')} >Stergeti C.I.</button>
           </>
         }
       </div>
 
-      <div>
         <p onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
+      <div>
 
         {isOpen === 'contractDeMunca' &&
           <>
             <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>DeleteContract</button>
+            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
           </>
         }
       </div>
       
-      <div>
         <p onClick={() => openSection('permis')}>Permis</p>
+      <div>
 
         {isOpen === 'permis' &&
           <>
             <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('permis')}>DeleteContract</button>
+            <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti Permis</button>
           </>
         }
       </div>
       
-      <div>
         <p onClick={() => openSection('acteStudii')}>Acte Studii</p>
+      <div>
 
         {isOpen === 'acteStudii' &&
           <>
             <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>DeleteContract</button>
+            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Acte Studii</button>
           </>
         }
       </div>
       
-      <div>
         <p onClick={() => openSection('acteStudii')}>Fisa Postului</p>
+      <div>
 
         {isOpen === 'fisaPostului' &&
           <>
             <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>DeleteContract</button>
+            <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Fisa Postului</button>
           </>
         }
       </div>
       
-      <div>
         <p onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
+      <div>
 
         {isOpen === 'adeverintaMedicala' &&
           <>
-            <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>DeleteContract</button>
+            <iframe src={worker.adeverintaMedicala} title='workerContract' width={900} height={500}></iframe>
+            <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Adeverinta Medicala</button>
           </>
         }
       </div>
       
-      <div>
         <p onClick={() => openSection('cazier')}>Cazier</p>
+      <div>
 
         {isOpen === 'cazier' &&
           <>
-            <iframe src={worker.cazier} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('cazier')}>DeleteContract</button>
+            <iframe src={worker.cazier} title='workerContract'></iframe>
+            <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti Cazier</button>
           </>
         }
       </div>
+      </section>
+      }
 
     </section>
   )
