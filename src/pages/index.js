@@ -233,15 +233,49 @@ const Home = () => {
       setValue(event.target.value)
     }
 
-    // console.log(worker)
+    const [modal, setModal] = useState(false)
+
+    function openModal() {
+      setModal(!modal)
+    }
+
+    const [name, setName] = useState(worker.nume)
+    const [job, setJob] = useState(worker.job)
+    const [stareCivila, setStareCivila] = useState(worker.stareCivila)
+    const [copii, setCopii] = useState(worker.copii)
+    const [zileConcediu, setZileConcediu] = useState(worker.zileConcediu)
+
+    useEffect(() => {
+      setName(worker.nume)
+      setJob(worker.job)
+      setStareCivila(worker.stareCivila)
+      setCopii(worker.copii)
+      setZileConcediu(worker.zileConcediu)
+    }, [worker.nume, worker.job, worker.stareCivila, worker.copii, worker.zileConcediu])
+
+    function nameHandler(event) {
+      setName(event.target.value)
+    }
+    
+    function jobHandler(event) {
+      setJob(event.target.value)
+    }
+
+    function stareCivilaHandler(event) {
+      setStareCivila(event.target.value)
+    }
+    function copiiHandler(event) {
+      setCopii(event.target.value)
+    }
+    function zileConcediuHandler(event) {
+      setZileConcediu(event.target.value)
+    }
+
+    console.log(name)
 
   return (
     <section className='bigMainSection'>
       <h1>Baza De Date Angajati (Mabis Wood Eko)</h1>
-
-      <div className='divCenter'>
-        {barcode}
-      </div>
 
         <div className="barcode-scanner">
           {cameraOn && 
@@ -252,11 +286,48 @@ const Home = () => {
         </div>
 
       <div className='divCenter'>
-        <button className='turnOffOnButton' onClick={toggleCamera}>{cameraOn ? 'Stop Scanning' : 'Scan'} </button>
+        <button className='turnOffOnButton' onClick={toggleCamera}>{cameraOn ? 'Stop Scanner' : 'Start Scanner'} </button>
       </div>
 
+      {modal && (
+        <div className='modal'>
+          <div className='overlay' onClick={openModal}></div>
+            <div className='modal-content'>
+              <h1>Adaugati / Stergeti Date / Informatii pentru {worker.nume} ({barcode})</h1>
+
+          <div className="deliveryAddress_inputs">
+            
+            <div className='deliveryAddress_inputs__input' >
+              <input required='required' defaultValue={name} onChange={nameHandler}></input>
+              <span>Nume</span>
+            </div>
+            
+            <div className='deliveryAddress_inputs__input' >
+              <input required='required' defaultValue={job} onChange={jobHandler}></input>
+              <span>Job</span>
+            </div>
+            
+            <div className='deliveryAddress_inputs__input' >
+              <input required='required' defaultValue={stareCivila} onChange={stareCivilaHandler}></input>
+              <span>Stare Civila</span>
+            </div>
+            
+            <div className='deliveryAddress_inputs__input' >
+              <input required='required' defaultValue={copii} onChange={copiiHandler}></input>
+              <span>Copii</span>
+            </div>
+            
+            <div className='deliveryAddress_inputs__input' >
+              <input required='required' defaultValue={zileConcediu} onChange={zileConcediuHandler}></input>
+              <span>Zile Concediu</span>
+            </div>
+
+          </div>
+
         <div className='fileUploadSelector'>
-          Alege tipul de fisier pe care vrei sa il incarci din lista de mai jos, dupa care apasa pe &quot;Choose File&quot;, alege din calculator fisierul pe care doresti sa il incarci si apoi apasa pe &quot;Upload!&quot; !
+            <p>
+              Alege tipul de fisier pe care vrei sa il incarci din lista de mai jos, dupa care apasa pe &quot;Choose File&quot;, alege din calculator fisierul pe care doresti sa il incarci si apoi apasa pe &quot;Upload!&quot; !
+            </p>
           <select name="languages" id="lang" onChange={changeValue}>
             <option value="ci" >Ci</option>
             <option value="contractDeMunca">Contract</option>
@@ -266,20 +337,35 @@ const Home = () => {
             <option value="adeverintaMedicala">Adeverinta Medicala</option>
             <option value="cazier">Cazier</option>
           </select>
+            
+          <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
           
-        <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
-        
-        <button onClick={handleUpload}>Upload!</button>
-
+          <button onClick={handleUpload}>Upload!</button>
         </div>
 
-      <div>
-        <p>{worker.nume}</p>
-        <p>{worker.varsta}</p>
-        <p>{worker.job}</p>
-      </div>
+            </div>
+        </div>
+      )}
+
 
     {barcode &&
+    <>
+        <section className='workerSection'>
+          <div className='workerInfo'>
+            <p>{barcode}</p>
+            <p>Nume: {worker.nume}</p>
+            <p>Stare Civila: {worker.stareCivila}</p>
+            <p>Functie: {worker.job}</p>
+            <p>Copii: {worker.copii}</p>
+            <p>Zile Concediu: {worker.zileConcediu}</p>
+          </div>
+
+          <div>
+            <button onClick={openModal}>Adaugati / Schimbati Date sau Informatii</button>
+          </div>
+        </section>
+    
+
     <section className='acteSection'>
       <p onClick={() => openSection('CI')}>C.I.</p>
       <div>
@@ -358,6 +444,7 @@ const Home = () => {
         }
       </div>
       </section>
+      </>
       }
 
     </section>
