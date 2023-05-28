@@ -237,41 +237,59 @@ const Home = () => {
 
     function openModal() {
       setModal(!modal)
+
+      modal === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
     }
+    const [initialName, setInitialName] = useState(worker.name);
+    const [initialJob, setInitialJob] = useState(worker.job);
+    const [initialStareCivila, setInitialStareCivila] = useState(worker.stareCivila);
+    const [initialCopii, setInitialCopii] = useState(worker.copii);
+    const [initialZileConcediu, setInitialZileConcediu] = useState(worker.zileConcediu);
 
     const [name, setName] = useState(worker.nume)
+
     const [job, setJob] = useState(worker.job)
     const [stareCivila, setStareCivila] = useState(worker.stareCivila)
     const [copii, setCopii] = useState(worker.copii)
     const [zileConcediu, setZileConcediu] = useState(worker.zileConcediu)
 
+    const [hasChanged, setHasChanged] = useState(false)
+
     useEffect(() => {
-      setName(worker.nume)
-      setJob(worker.job)
-      setStareCivila(worker.stareCivila)
-      setCopii(worker.copii)
-      setZileConcediu(worker.zileConcediu)
+      setInitialName(worker.nume)
+      setInitialJob(worker.job)
+      setInitialStareCivila(worker.stareCivila)
+      setInitialCopii(worker.copii)
+      setInitialZileConcediu(worker.zileConcediu)
     }, [worker.nume, worker.job, worker.stareCivila, worker.copii, worker.zileConcediu])
 
     function nameHandler(event) {
-      setName(event.target.value)
+      const newName = event.target.value;
+      setName(newName);
+      setHasChanged(newName !== initialName);
     }
     
     function jobHandler(event) {
-      setJob(event.target.value)
+      const newJob = event.target.value
+      setJob(newJob)
+      setHasChanged(newJob !== initialJob)
     }
 
     function stareCivilaHandler(event) {
-      setStareCivila(event.target.value)
+      const newStareCivila = event.target.value
+      setStareCivila(newStareCivila)
+      setHasChanged(newStareCivila !== initialStareCivila)
     }
     function copiiHandler(event) {
-      setCopii(event.target.value)
+      const newCopii = event.target.value
+      setCopii(newCopii)
+      setHasChanged(newCopii !== initialCopii)
     }
     function zileConcediuHandler(event) {
-      setZileConcediu(event.target.value)
+      const newZileConcediu = event.target.value
+      setZileConcediu(newZileConcediu)
+      setHasChanged(newZileConcediu !== initialZileConcediu)
     }
-
-    console.log(name)
 
   return (
     <section className='bigMainSection'>
@@ -298,33 +316,38 @@ const Home = () => {
           <div className="deliveryAddress_inputs">
             
             <div className='deliveryAddress_inputs__input' >
-              <input required='required' defaultValue={name} onChange={nameHandler}></input>
+              <input required='required' defaultValue={initialName} onChange={nameHandler}></input>
               <span>Nume</span>
             </div>
             
             <div className='deliveryAddress_inputs__input' >
-              <input required='required' defaultValue={job} onChange={jobHandler}></input>
+              <input required='required' defaultValue={initialJob} onChange={jobHandler}></input>
               <span>Job</span>
             </div>
             
             <div className='deliveryAddress_inputs__input' >
-              <input required='required' defaultValue={stareCivila} onChange={stareCivilaHandler}></input>
+              <input required='required' defaultValue={initialStareCivila} onChange={stareCivilaHandler}></input>
               <span>Stare Civila</span>
             </div>
             
             <div className='deliveryAddress_inputs__input' >
-              <input required='required' defaultValue={copii} onChange={copiiHandler}></input>
+              <input required='required' defaultValue={initialCopii} onChange={copiiHandler}></input>
               <span>Copii</span>
             </div>
             
             <div className='deliveryAddress_inputs__input' >
-              <input required='required' defaultValue={zileConcediu} onChange={zileConcediuHandler}></input>
+              <input required='required' defaultValue={initialZileConcediu} onChange={zileConcediuHandler}></input>
               <span>Zile Concediu</span>
             </div>
 
           </div>
 
-        <div className='fileUploadSelector'>
+          <div className='modal__buttons'>
+            <button disabled={!hasChanged}>Save</button>
+            <button onClick={openModal}>Cancel</button>
+          </div>
+
+        {/* <div className='fileUploadSelector'>
             <p>
               Alege tipul de fisier pe care vrei sa il incarci din lista de mai jos, dupa care apasa pe &quot;Choose File&quot;, alege din calculator fisierul pe care doresti sa il incarci si apoi apasa pe &quot;Upload!&quot; !
             </p>
@@ -341,7 +364,7 @@ const Home = () => {
           <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
           
           <button onClick={handleUpload}>Upload!</button>
-        </div>
+        </div> */}
 
             </div>
         </div>
@@ -374,6 +397,9 @@ const Home = () => {
           <>
             <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
             <button onClick={() => deleteImagesOrPdfs('ci')} >Stergeti C.I.</button>
+
+            <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={handleUpload}>Upload C.I.!</button>
           </>
         }
       </div>
