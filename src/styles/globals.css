@@ -179,7 +179,7 @@ canvas{
   scale: 1.1;
 }
 
-.acteSection div {
+.acteSection div div {
   display: flex;
   flex-direction: column;
   justify-content: center;

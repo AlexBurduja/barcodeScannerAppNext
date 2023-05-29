@@ -4,6 +4,7 @@ import { db, storage } from '../components/FirebaseConfig';
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
 import {IoMdReverseCamera} from 'react-icons/io'
+import {AnimatePresence, motion} from 'framer-motion'
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -120,8 +121,6 @@ const Home = () => {
     setIsOpen(section === isOpen ? null : section)
   }
 
-  console.log(isOpen)
-
   useEffect(() => {
     const getDocsFromCol = async () => {
       const ref = collection(db, 'barcodes');
@@ -196,11 +195,7 @@ const Home = () => {
       setFile(event.target.files[0])
     }
 
-    function handleUpload(){
-      if(!file){
-        alert('Please choose a file first!')
-      }
-
+    function handleUpload(value){
       if(!barcode){
         alert('Scan a barcode first!')
         return;
@@ -307,8 +302,14 @@ const Home = () => {
         <button className='turnOffOnButton' onClick={toggleCamera}>{cameraOn ? 'Stop Scanner' : 'Start Scanner'} </button>
       </div>
 
+    <AnimatePresence >
       {modal && (
-        <div className='modal'>
+        <motion.div 
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        exit={{opacity: 0}}
+        transition={{duration: 0.3}}
+        className='modal'>
           <div className='overlay' onClick={openModal}></div>
             <div className='modal-content'>
               <h1>Adaugati / Stergeti Date / Informatii pentru {worker.nume} ({barcode})</h1>
@@ -367,8 +368,9 @@ const Home = () => {
         </div> */}
 
             </div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
 
     {barcode &&
@@ -392,82 +394,144 @@ const Home = () => {
     <section className='acteSection'>
       <p onClick={() => openSection('CI')}>C.I.</p>
       <div>
-
+        <AnimatePresence>
         {isOpen === 'CI' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
             <button onClick={() => deleteImagesOrPdfs('ci')} >Stergeti C.I.</button>
 
+          
             <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={handleUpload}>Upload C.I.!</button>
-          </>
+            <button onClick={() => handleUpload('ci')}>Incarcati C.I!</button>
+          
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
 
         <p onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
       <div>
-
+      <AnimatePresence>
         {isOpen === 'contractDeMunca' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
             <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
-          </>
+
+            <input type='file' name='contractDeMunca' id='contractDeMunca' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={() => handleUpload('contractDeMunca')}>Incarcati Contract De Munca!</button>
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
       
         <p onClick={() => openSection('permis')}>Permis</p>
       <div>
-
+      <AnimatePresence>
         {isOpen === 'permis' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
             <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti Permis</button>
-          </>
+
+            <input type='file' name='permis' id='permis' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={() => handleUpload('permis')}>Incarcati Permis!</button>
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
       
         <p onClick={() => openSection('acteStudii')}>Acte Studii</p>
       <div>
-
+      <AnimatePresence>
         {isOpen === 'acteStudii' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
             <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Acte Studii</button>
-          </>
+
+            <input type='file' name='acteStudii' id='acteStudii' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={() => handleUpload('acteStudii')}>Incarcati Acte Studii!</button>
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
       
-        <p onClick={() => openSection('acteStudii')}>Fisa Postului</p>
+        <p onClick={() => openSection('fisaPostului')}>Fisa Postului</p>
       <div>
-
+      <AnimatePresence>
         {isOpen === 'fisaPostului' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
             <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Fisa Postului</button>
-          </>
+
+            <input type='file' name='fisaPostului' id='fisaPostului' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={() => handleUpload('fisaPostului')}>Incarcati Fisa Postului!</button>
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
       
         <p onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
       <div>
-
+      <AnimatePresence>
         {isOpen === 'adeverintaMedicala' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.adeverintaMedicala} title='workerContract' width={900} height={500}></iframe>
             <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Adeverinta Medicala</button>
-          </>
+
+            <input type='file' name='adeverintaMedicala' id='adeverintaMedicala' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={() => handleUpload('adeverintaMedicala')}>Incarcati Adeverinta Medicala!</button>
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
       
         <p onClick={() => openSection('cazier')}>Cazier</p>
       <div>
-
+      <AnimatePresence>
         {isOpen === 'cazier' &&
-          <>
+          <motion.div
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          exit={{opacity:0}}
+          transition={{duration: 0.3}}
+          >
             <iframe src={worker.cazier} title='workerContract'></iframe>
             <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti Cazier</button>
-          </>
+
+            <input type='file' name='cazier' id='cazier' onChange={handleChange} accept='image/*, .pdf'></input>
+            <button onClick={() => handleUpload('cazier')}>Incarcati Cazier!</button>
+          </motion.div>
         }
+        </AnimatePresence>
       </div>
       </section>
       </>
