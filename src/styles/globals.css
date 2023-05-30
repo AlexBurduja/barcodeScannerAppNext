@@ -241,7 +241,7 @@ canvas{
 }
 
 .overlay{
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(155, 155, 156,0.8);
   height: 100vh;
   width: 100%;
   position: fixed;
@@ -259,8 +259,8 @@ canvas{
   right: 50%;
   transform: translate(50%, -50%);
   line-height: 1.4;
-  background: black;
-  padding: 14px 28px;
+  background: #f2f2f2;
+  padding: 30px 28px;
   border-radius: 10px;
   
   max-height: calc(100vh - 60px);
@@ -274,11 +274,13 @@ canvas{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 30px;
+  gap: 50px;
 }
 
-.modal-content h1{
+.modal1  h1{
   text-align: center;
+  color: black;
+
 }
 
 .modal__buttons{
@@ -287,6 +289,25 @@ canvas{
   justify-content: space-between;
   width: 90%;
   margin-left: 5%;
+}
+
+.modal__buttons button:disabled{
+  color: white;
+  background: grey;
+  cursor: default;
+}
+
+
+.modal__buttons button{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background: linear-gradient(135deg,#000c40,#2b2be6);
+  width: 100px;
+  height: 55px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 20px;
+  color: white;
 }
 
 .deliveryAddress_inputs{
@@ -330,10 +351,7 @@ canvas{
   transform: translateX(10px) translateY(-7px);
   font-size: 0.75em;
   padding: 0 10px;
-  border-left: 1px solid rgba(48, 48, 230,1);
-  border-bottom: 1px solid rgba(48, 48, 230,1);
-  border-top: 1px solid rgba(48, 48, 230,1);
-  border-right: 1px solid rgba(48, 48, 230,1);
+  border: 1px solid rgba(48, 48, 230,1);
   background-color: white;
   letter-spacing: 0.2em;
 }
@@ -343,10 +361,14 @@ canvas{
   border: 1px solid rgba(48, 48, 230,1);
 }
 
+.modal__content__dynamicName{
+  color: rgb(0, 255, 0);
+}
+
 @media (max-width: 700px) {
 
   .modal-content {
-    height: 90%;
+    object-fit: contain;
     overflow: auto;
     justify-content: flex-start;
   }

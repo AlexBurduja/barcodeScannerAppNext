@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db, storage } from '../components/FirebaseConfig';
-import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytesResumable } from 'firebase/storage';
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { deleteObject, getDownloadURL, listAll, uploadBytesResumable, ref } from 'firebase/storage';
 import {IoMdReverseCamera} from 'react-icons/io'
 import {AnimatePresence, motion} from 'framer-motion'
 
@@ -24,7 +24,7 @@ const Home = () => {
         inputStream: {
           type: 'LiveStream',
           name: 'Live',
-          target: document.querySelector('.video-container'), // Use the videoRef to target the video element
+          target: document.querySelector('.video-container'),
           constraints: {
             width: 1920,
             height: 1080,
@@ -70,7 +70,6 @@ const Home = () => {
       if (result && result.codeResult && result.codeResult.code) {
         const code = result.codeResult.code;
     
-        // Check if the code is a valid document ID
         const isValidCode = typeof code === 'string' && code.length > 0 && !code.includes('/');
         if (!isValidCode) {
           console.error('Invalid barcode code:', code);
@@ -91,9 +90,10 @@ const Home = () => {
               setWorker(snapshot.data());
               console.log('exists');
             } else {
-              const setRef = doc(db, 'barcodes', code);
-              setDoc(setRef, {});
-              console.log('added');
+              // const setRef = doc(db, 'barcodes', code);
+              // setDoc(setRef, {});
+              // console.log('added');
+              setModal2(true)
             }
           })
           .catch((error) => {
@@ -109,11 +109,14 @@ const Home = () => {
     };
   }, [startScanner, cameraOn]);
 
+
   const [camera, setCamera] = useState(false)
 
   const [existingBarcodes, setExistingBarcodes] = useState([])
   
   const [worker, setWorker] = useState([])
+
+  
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -170,8 +173,6 @@ const Home = () => {
     }
   }, [barcode]);
 
-  console.log(worker)
-
     function deleteImagesOrPdfs (fileName){
       const fileRef = ref(storage, `${barcode}/${fileName}`)
 
@@ -210,13 +211,14 @@ const Home = () => {
           const percent = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           )
-
           setPercent(percent)
         },
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            console.log(url)
+            setWorker((prevWorker) => {
+              return { ...prevWorker, [value]:url}
+            })
           })
         }
       )
@@ -229,12 +231,21 @@ const Home = () => {
     }
 
     const [modal, setModal] = useState(false)
+    const [modal2, setModal2] = useState(false)
 
     function openModal() {
       setModal(!modal)
 
       modal === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
     }
+    
+
+    function openModal2() {
+      setModal2(!modal2)
+
+      modal === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
+    }
+
     const [initialName, setInitialName] = useState(worker.name);
     const [initialJob, setInitialJob] = useState(worker.job);
     const [initialStareCivila, setInitialStareCivila] = useState(worker.stareCivila);
@@ -286,6 +297,48 @@ const Home = () => {
       setHasChanged(newZileConcediu !== initialZileConcediu)
     }
 
+    function saveChanges(){
+      const database = doc(db, `barcodes/${barcode}`)
+      
+      const data = {
+        copii: copii === undefined ? initialCopii : copii,
+        job: job === undefined ? initialJob : job,
+        nume: name === undefined ? initialName : name,
+        stareCivila: stareCivila === undefined ? initialStareCivila : stareCivila,
+        zileConcediu: zileConcediu === undefined ? initialZileConcediu : zileConcediu
+    }
+        updateDoc(database, data)
+        .then(() => {
+          const updatedFields = {};
+          if (copii !== undefined) {
+            updatedFields.copii = copii;
+          }
+          if (job !== undefined) {
+            updatedFields.job = job;
+          }
+          if (name !== undefined) {
+            updatedFields.nume = name;
+          }
+          if (stareCivila !== undefined) {
+            updatedFields.stareCivila = stareCivila;
+          }
+          if (zileConcediu !== undefined) {
+            updatedFields.zileConcediu = zileConcediu;
+          }
+
+          setWorker((prevWorker) => {
+            return {...prevWorker, ...updatedFields };
+          });
+
+          setHasChanged(false)
+        })
+        .catch((e) => {
+          console.log('Error updating doccument:', e)
+        })
+    }
+
+    
+
   return (
     <section className='bigMainSection'>
       <h1>Baza De Date Angajati (Mabis Wood Eko)</h1>
@@ -311,8 +364,8 @@ const Home = () => {
         transition={{duration: 0.3}}
         className='modal'>
           <div className='overlay' onClick={openModal}></div>
-            <div className='modal-content'>
-              <h1>Adaugati / Stergeti Date / Informatii pentru {worker.nume} ({barcode})</h1>
+            <div className='modal-content modal1 '>
+              <h1>Schimbati Date / Informatii pentru <span className='modal__content__dynamicName'>{worker.nume} ({barcode})</span></h1>
 
           <div className="deliveryAddress_inputs">
             
@@ -344,8 +397,8 @@ const Home = () => {
           </div>
 
           <div className='modal__buttons'>
-            <button disabled={!hasChanged}>Save</button>
-            <button onClick={openModal}>Cancel</button>
+            <button  onClick={saveChanges} disabled={!hasChanged}>Save</button>
+            <button  onClick={openModal}>Cancel</button>
           </div>
 
         {/* <div className='fileUploadSelector'>
@@ -367,6 +420,22 @@ const Home = () => {
           <button onClick={handleUpload}>Upload!</button>
         </div> */}
 
+            </div>
+        </motion.div>
+      )}
+      </AnimatePresence>
+
+      <AnimatePresence >
+      {modal2 && (
+        <motion.div 
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        exit={{opacity: 0}}
+        transition={{duration: 0.3}}
+        className='modal'>
+          <div className='overlay' onClick={openModal2}></div>
+            <div className='modal-content modal1 '>
+              <p>Do you want to create {barcode} ?</p>
             </div>
         </motion.div>
       )}
@@ -407,7 +476,7 @@ const Home = () => {
 
           
             <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('ci')}>Incarcati C.I!</button>
+            <button onClick={() => handleUpload('ci')} >Incarcati C.I!</button>
           
           </motion.div>
         }
