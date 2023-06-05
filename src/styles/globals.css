@@ -160,7 +160,7 @@ canvas{
   overflow: hidden;
 }
 
-.acteSection p{
+.acteActionP{
   background-color: rgba(255,255,255,0.2);
   color: white;
   font-weight: bold;
@@ -173,11 +173,16 @@ canvas{
   scale: 1;
 }
 
-.acteSection p:hover{
-  background-color: rgba(255,255,255,0.8);
-  color: black;
-  scale: 1.1;
+.acteSectionNotAvailable p{
+  background-color: transparent;
+  color: red;
 }
+
+  .acteActionP:hover{
+    background-color: rgba(255,255,255,0.8);
+    color: black;
+    scale: 1.1;
+  }
 
 .acteSection div div {
   display: flex;

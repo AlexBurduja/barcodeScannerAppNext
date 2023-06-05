@@ -337,7 +337,6 @@ const Home = () => {
         })
     }
 
-    
 
   return (
     <section className='bigMainSection'>
@@ -401,25 +400,6 @@ const Home = () => {
             <button  onClick={openModal}>Cancel</button>
           </div>
 
-        {/* <div className='fileUploadSelector'>
-            <p>
-              Alege tipul de fisier pe care vrei sa il incarci din lista de mai jos, dupa care apasa pe &quot;Choose File&quot;, alege din calculator fisierul pe care doresti sa il incarci si apoi apasa pe &quot;Upload!&quot; !
-            </p>
-          <select name="languages" id="lang" onChange={changeValue}>
-            <option value="ci" >Ci</option>
-            <option value="contractDeMunca">Contract</option>
-            <option value="permis">Permis</option>
-            <option value="acteStudii">Acte Studii</option>
-            <option value="fisaPostului">Fisa Postului</option>
-            <option value="adeverintaMedicala">Adeverinta Medicala</option>
-            <option value="cazier">Cazier</option>
-          </select>
-            
-          <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
-          
-          <button onClick={handleUpload}>Upload!</button>
-        </div> */}
-
             </div>
         </motion.div>
       )}
@@ -461,7 +441,7 @@ const Home = () => {
     
 
     <section className='acteSection'>
-      <p onClick={() => openSection('CI')}>C.I.</p>
+      <p className='acteActionP' onClick={() => openSection('CI')}>C.I.</p>
       <div>
         <AnimatePresence>
         {isOpen === 'CI' &&
@@ -471,8 +451,17 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
-            <button onClick={() => deleteImagesOrPdfs('ci')} >Stergeti C.I.</button>
+            {worker.ci ? 
+            <>
+              <iframe src={worker.ci} width={900} height={500} title='workerCi'></iframe>
+              <button onClick={() => deleteImagesOrPdfs('ci')} >Stergeti C.I.</button>
+            </>
+
+            :
+              <div className='acteSectionNotAvailable'>
+                <p>Nu exista C.I.</p>
+              </div>
+            }
 
           
             <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
@@ -483,7 +472,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
 
-        <p onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
+        <p className='acteActionP' onClick={() => openSection('contractDeMunca')}>Contract De Munca</p>
       <div>
       <AnimatePresence>
         {isOpen === 'contractDeMunca' &&
@@ -493,8 +482,18 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
+            {worker.contractDeMunca ? 
+            <>
+              <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
+              <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
+            </>
+
+            :
+
+            <div className='acteSectionNotAvailable'>
+            <p>Nu exista Contract De Munca.</p>
+            </div>
+          }
 
             <input type='file' name='contractDeMunca' id='contractDeMunca' onChange={handleChange} accept='image/*, .pdf'></input>
             <button onClick={() => handleUpload('contractDeMunca')}>Incarcati Contract De Munca!</button>
@@ -503,7 +502,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
       
-        <p onClick={() => openSection('permis')}>Permis</p>
+        <p className='acteActionP' onClick={() => openSection('permis')}>Permis</p>
       <div>
       <AnimatePresence>
         {isOpen === 'permis' &&
@@ -513,8 +512,19 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti Permis</button>
+
+            {worker.permis ? 
+            <>
+              <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
+              <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti Permis</button>
+            </>
+
+            :
+
+            <div className='acteSectionNotAvailable'>
+              <p>Nu exista Permis.</p>
+            </div>
+            }
 
             <input type='file' name='permis' id='permis' onChange={handleChange} accept='image/*, .pdf'></input>
             <button onClick={() => handleUpload('permis')}>Incarcati Permis!</button>
@@ -523,7 +533,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
       
-        <p onClick={() => openSection('acteStudii')}>Acte Studii</p>
+        <p className='acteActionP' onClick={() => openSection('acteStudii')}>Acte Studii</p>
       <div>
       <AnimatePresence>
         {isOpen === 'acteStudii' &&
@@ -533,8 +543,18 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
+            {worker.acteStudii ? 
+            <>
             <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
             <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Acte Studii</button>
+            </>
+
+            :
+
+            <div className='acteSectionNotAvailable'>
+              <p>Nu exista Acte de Studii.</p>
+            </div>
+          }
 
             <input type='file' name='acteStudii' id='acteStudii' onChange={handleChange} accept='image/*, .pdf'></input>
             <button onClick={() => handleUpload('acteStudii')}>Incarcati Acte Studii!</button>
@@ -543,7 +563,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
       
-        <p onClick={() => openSection('fisaPostului')}>Fisa Postului</p>
+        <p className='acteActionP' onClick={() => openSection('fisaPostului')}>Fisa Postului</p>
       <div>
       <AnimatePresence>
         {isOpen === 'fisaPostului' &&
@@ -553,8 +573,19 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Fisa Postului</button>
+            {worker.fisaPostului ? 
+            <>
+              <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
+              <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Fisa Postului</button>
+            </>
+            
+            :
+
+            <div className='acteSectionNotAvailable'>
+              <p>Nu exista Fisa Postului.</p>
+            </div>
+          
+          }
 
             <input type='file' name='fisaPostului' id='fisaPostului' onChange={handleChange} accept='image/*, .pdf'></input>
             <button onClick={() => handleUpload('fisaPostului')}>Incarcati Fisa Postului!</button>
@@ -563,7 +594,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
       
-        <p onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
+        <p className='acteActionP' onClick={() => openSection('adeverintaMedicala')}>Adeverinta Medicala</p>
       <div>
       <AnimatePresence>
         {isOpen === 'adeverintaMedicala' &&
@@ -573,8 +604,18 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            <iframe src={worker.adeverintaMedicala} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Adeverinta Medicala</button>
+            {worker.adeverintaMedicala ? 
+            <>
+              <iframe src={worker.adeverintaMedicala} title='workerContract' width={900} height={500}></iframe>
+              <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Adeverinta Medicala</button>
+            </>
+            
+            :
+
+            <div className='acteSectionNotAvailable'>
+              <p>Nu exista Adeverinta Medicala.</p>
+            </div>
+            }
 
             <input type='file' name='adeverintaMedicala' id='adeverintaMedicala' onChange={handleChange} accept='image/*, .pdf'></input>
             <button onClick={() => handleUpload('adeverintaMedicala')}>Incarcati Adeverinta Medicala!</button>
@@ -583,7 +624,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
       
-        <p onClick={() => openSection('cazier')}>Cazier</p>
+        <p className='acteActionP' onClick={() => openSection('cazier')}>Cazier</p>
       <div>
       <AnimatePresence>
         {isOpen === 'cazier' &&
@@ -593,11 +634,23 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            <iframe src={worker.cazier} title='workerContract'></iframe>
-            <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti Cazier</button>
+            {worker.cazier ? 
+            <>
+              <iframe src={worker.cazier} title='workerContract'></iframe>
+              <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti Cazier</button>
+            </>
+            
+            :
+
+            <div className='acteSectionNotAvailable'>
+              <p>Nu exista Cazier.</p>
+            </div>
+          }
 
             <input type='file' name='cazier' id='cazier' onChange={handleChange} accept='image/*, .pdf'></input>
+            {file && 
             <button onClick={() => handleUpload('cazier')}>Incarcati Cazier!</button>
+            }
           </motion.div>
         }
         </AnimatePresence>
