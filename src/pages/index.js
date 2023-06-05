@@ -463,7 +463,7 @@ const Home = () => {
 
           <div className='modal__buttons'>
             <button onClick={saveNewBarcode}>Save</button>
-            <button >Cancel</button>
+            <button onClick={() => {startScanner(); openModal2();}}>Cancel</button>
           </div>
 
             </div>
