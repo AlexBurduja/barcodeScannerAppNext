@@ -88,12 +88,10 @@ const Home = () => {
           .then((snapshot) => {
             if (snapshot.exists()) {
               setWorker(snapshot.data());
-              console.log('exists');
+
             } else {
-              // const setRef = doc(db, 'barcodes', code);
-              // setDoc(setRef, {});
-              // console.log('added');
               setModal2(true)
+
             }
           })
           .catch((error) => {
@@ -337,6 +335,23 @@ const Home = () => {
         })
     }
 
+    function saveNewBarcode(){
+      const ref = doc(db, `barcodes`, barcode)
+
+      const data = {
+        nume: name === undefined ? `Necompletat` : name,
+        job: job === undefined ? `Necompletat` : job,
+        copii: copii === undefined ? '0' : copii,
+        stareCivila: stareCivila === undefined ? `Necompletat` : stareCivila,
+        zileConcediu: zileConcediu === undefined ? '0' : zileConcediu
+      }
+
+      setDoc(ref, data)
+
+      setWorker(data)
+    }
+
+    
 
   return (
     <section className='bigMainSection'>
@@ -375,7 +390,7 @@ const Home = () => {
             
             <div className='deliveryAddress_inputs__input' >
               <input required='required' defaultValue={initialJob} onChange={jobHandler}></input>
-              <span>Job</span>
+              <span>Functie</span>
             </div>
             
             <div className='deliveryAddress_inputs__input' >
@@ -414,15 +429,50 @@ const Home = () => {
         transition={{duration: 0.3}}
         className='modal'>
           <div className='overlay' onClick={openModal2}></div>
-            <div className='modal-content modal1 '>
-              <p>Do you want to create {barcode} ?</p>
+            <div className='modal-content modal2'>
+              <h1>Ce angajat vrei sa adaugi pe codul de bare &quot;<span>{barcode}</span>&quot; ?</h1>
+
+            <div className="deliveryAddress_inputs">
+              
+              <div className='deliveryAddress_inputs__input' >
+                <input required='required' onChange={nameHandler}></input>
+                <span>Nume</span>
+              </div>
+              
+              <div className='deliveryAddress_inputs__input' >
+                <input required='required' onChange={jobHandler}></input>
+                <span>Job</span>
+              </div>
+              
+              <div className='deliveryAddress_inputs__input' >
+                <input required='required' onChange={stareCivilaHandler}></input>
+                <span>Stare Civila</span>
+              </div>
+              
+              <div className='deliveryAddress_inputs__input' >
+                <input required='required' onChange={copiiHandler}></input>
+                <span>Copii</span>
+              </div>
+              
+              <div className='deliveryAddress_inputs__input' >
+                <input required='required' onChange={zileConcediuHandler}></input>
+                <span>Zile Concediu</span>
+              </div>
+
+            </div>
+
+          <div className='modal__buttons'>
+            <button onClick={saveNewBarcode}>Save</button>
+            <button >Cancel</button>
+          </div>
+
             </div>
         </motion.div>
       )}
       </AnimatePresence>
 
 
-    {barcode &&
+    {barcode && Object.keys(worker).length > 0 && (
     <>
         <section className='workerSection'>
           <div className='workerInfo'>
@@ -435,7 +485,7 @@ const Home = () => {
           </div>
 
           <div>
-            <button onClick={openModal}>Adaugati / Schimbati Date sau Informatii</button>
+            <button onClick={openModal}>Adaugati / Schimbati Informatii</button>
           </div>
         </section>
     
@@ -657,7 +707,7 @@ const Home = () => {
       </div>
       </section>
       </>
-      }
+      )}
 
     </section>
   )

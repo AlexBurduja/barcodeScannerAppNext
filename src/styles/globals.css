@@ -282,10 +282,19 @@ canvas{
   gap: 50px;
 }
 
+.modal2 h1{
+  color: black;
+  font-weight: normal;
+  text-align: center;
+}
+
+.modal2 h1 span{
+  font-weight: bolder;
+}
+
 .modal1  h1{
   text-align: center;
   color: black;
-
 }
 
 .modal__buttons{
