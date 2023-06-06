@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db, storage } from '../components/FirebaseConfig';
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, listAll, uploadBytesResumable, ref } from 'firebase/storage';
 import {IoMdReverseCamera} from 'react-icons/io'
 import {AnimatePresence, motion} from 'framer-motion'
@@ -360,9 +360,32 @@ const Home = () => {
       setWorker(data)
     }
 
-    console.log(name)
+    const deleteImage = (imageLink) => {
+      const imageRef = ref(storage, imageLink);
+      return deleteObject(imageRef);
+    };
+
+    const deleteImages = async () => {
+      try {
+        const deletePromises = Object.values(worker)
+          .filter((value) => typeof value === "string" && value.startsWith("https://firebasestorage.googleapis.com/"))
+          .map((imageLink) => deleteImage(imageLink));
+        await Promise.all(deletePromises);
+        console.log("Images deleted successfully.");
+      } catch (error) {
+        console.log("Error deleting images:", error);
+      }
+    };
+
+    function deleteAngajat(){
+      const docRef = doc(db, `barcodes`, barcode);      
+      deleteDoc(docRef);
+
+      deleteImages();
+      setWorker([])
+    }
+
     
-    console
 
   return (
     <section className='bigMainSection'>
@@ -714,6 +737,10 @@ const Home = () => {
           </motion.div>
         }
         </AnimatePresence>
+      </div>
+
+      <div>
+        <button onClick={deleteAngajat}>Stergeti Angajat</button>
       </div>
       </section>
       </>
