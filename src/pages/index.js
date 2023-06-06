@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db, storage } from '../components/FirebaseConfig';
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, listAll, uploadBytesResumable, ref } from 'firebase/storage';
 import {IoMdReverseCamera} from 'react-icons/io'
 import {AnimatePresence, motion} from 'framer-motion'
@@ -194,9 +194,16 @@ const Home = () => {
       setFile(event.target.files[0])
     }
 
+    console.log(file)
+
     function handleUpload(value){
       if(!barcode){
         alert('Scan a barcode first!')
+        return;
+      }
+
+      if (!file){
+        alert('Add a file first')
         return;
       }
 
@@ -220,6 +227,8 @@ const Home = () => {
           })
         }
       )
+
+      setFile('')
     }
 
     const [value, setValue] = useState('ci')
@@ -351,12 +360,9 @@ const Home = () => {
       setWorker(data)
     }
 
-    function deleteAngajat(){
-      const docRef = doc(db, `barcodes`, barcode)
-      const 
-
-      deleteDoc(ref)
-    }
+    console.log(name)
+    
+    console
 
   return (
     <section className='bigMainSection'>
@@ -537,21 +543,20 @@ const Home = () => {
           exit={{opacity:0}}
           transition={{duration: 0.3}}
           >
-            {worker.contractDeMunca ? 
-            <>
+            {worker.contractDeMunca ?             
               <iframe src={worker.contractDeMunca} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
-            </>
-
+            
             :
 
             <div className='acteSectionNotAvailable'>
             <p>Nu exista Contract De Munca.</p>
             </div>
           }
-
+          <div id='acteSectionButtons'>
+            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
             <input type='file' name='contractDeMunca' id='contractDeMunca' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('contractDeMunca')}>Incarcati Contract De Munca!</button>
+            <button onClick={() => handleUpload('contractDeMunca')}>Incarcati Contract!</button>
+          </div>
           </motion.div>
         }
         </AnimatePresence>
@@ -710,10 +715,6 @@ const Home = () => {
         }
         </AnimatePresence>
       </div>
-
-        <div>
-          <button onClick={deleteAngajat}>Stergeti Angajat</button>
-        </div>
       </section>
       </>
       )}
