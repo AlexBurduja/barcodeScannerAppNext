@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Quagga from '@ericblade/quagga2';
 import { db, storage } from '../components/FirebaseConfig';
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, listAll, uploadBytesResumable, ref } from 'firebase/storage';
 import {IoMdReverseCamera} from 'react-icons/io'
 import {AnimatePresence, motion} from 'framer-motion'
@@ -351,7 +351,12 @@ const Home = () => {
       setWorker(data)
     }
 
-    
+    function deleteAngajat(){
+      const docRef = doc(db, `barcodes`, barcode)
+      const 
+
+      deleteDoc(ref)
+    }
 
   return (
     <section className='bigMainSection'>
@@ -441,7 +446,7 @@ const Home = () => {
               
               <div className='deliveryAddress_inputs__input' >
                 <input required='required' onChange={jobHandler}></input>
-                <span>Job</span>
+                <span>Functie</span>
               </div>
               
               <div className='deliveryAddress_inputs__input' >
@@ -462,8 +467,8 @@ const Home = () => {
             </div>
 
           <div className='modal__buttons'>
-            <button onClick={saveNewBarcode}>Save</button>
-            <button onClick={() => {startScanner(); openModal2();}}>Cancel</button>
+            <button disabled={!name && !job && !stareCivila && !copii && !zileConcediu} onClick={() => {saveNewBarcode(); openModal2();}}>Save</button>
+            <button onClick={() => {toggleCamera(); openModal2()}}>Cancel</button>
           </div>
 
             </div>
@@ -705,6 +710,10 @@ const Home = () => {
         }
         </AnimatePresence>
       </div>
+
+        <div>
+          <button onClick={deleteAngajat}>Stergeti Angajat</button>
+        </div>
       </section>
       </>
       )}
