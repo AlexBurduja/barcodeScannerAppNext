@@ -5,6 +5,8 @@ import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from '
 import { deleteObject, getDownloadURL, listAll, uploadBytesResumable, ref } from 'firebase/storage';
 import {IoMdReverseCamera} from 'react-icons/io'
 import {AnimatePresence, motion} from 'framer-motion'
+import Image from 'next/image';
+import logo from '../../public/logoMabis.svg';
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -90,7 +92,7 @@ const Home = () => {
               setWorker(snapshot.data());
 
             } else {
-              setModal2(true)
+              openModal2();
 
             }
           })
@@ -250,7 +252,7 @@ const Home = () => {
     function openModal2() {
       setModal2(!modal2)
 
-      modal === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
+      modal2 === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
     }
 
     const [initialName, setInitialName] = useState(worker.name);
@@ -388,8 +390,14 @@ const Home = () => {
     
 
   return (
+      <div className='colorSection'>
+        <div className="overlay"></div>
     <section className='bigMainSection'>
-      <h1>Baza De Date Angajati (Mabis Wood Eko)</h1>
+
+<header className='webHeader'>
+      <Image src={logo} alt='logoMabisWE' width={300} height={300}/>
+      <h1>Baza De Date Angajati MWoodEko</h1>
+  </header>
 
         <div className="barcode-scanner">
           {cameraOn && 
@@ -497,7 +505,7 @@ const Home = () => {
 
           <div className='modal__buttons'>
             <button disabled={!name && !job && !stareCivila && !copii && !zileConcediu} onClick={() => {saveNewBarcode(); openModal2();}}>Save</button>
-            <button onClick={() => {toggleCamera(); openModal2()}}>Cancel</button>
+            <button onClick={() => {toggleCamera(); openModal2();}}>Cancel</button>
           </div>
 
             </div>
@@ -745,8 +753,8 @@ const Home = () => {
       </section>
       </>
       )}
-
     </section>
+      </div>
   )
 };
 
