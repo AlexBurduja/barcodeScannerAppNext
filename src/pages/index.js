@@ -196,16 +196,9 @@ const Home = () => {
       setFile(event.target.files[0])
     }
 
-    console.log(file)
-
     function handleUpload(value){
       if(!barcode){
         alert('Scan a barcode first!')
-        return;
-      }
-
-      if (!file){
-        alert('Add a file first')
         return;
       }
 
@@ -387,7 +380,8 @@ const Home = () => {
       setWorker([])
     }
 
-    
+  
+    console.log(file)
 
   return (
       <div className='colorSection'>
@@ -396,7 +390,6 @@ const Home = () => {
 
 <header className='webHeader'>
         <Image src={logo} alt='logoMabisWE' width={300} height={300}/>
-        <h1>Baza De Date Angajati MWoodEko</h1>
   </header>
 
         <div className="barcode-scanner">
@@ -584,9 +577,22 @@ const Home = () => {
             </div>
           }
           <div id='acteSectionButtons'>
-            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract</button>
-            <input type='file' name='contractDeMunca' id='contractDeMunca' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('contractDeMunca')}>Incarcati Contract!</button>
+            <div className='acteSectionButtons__alone'>
+            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti</button>
+            </div>
+
+            <div class='acteSectionButtons__columnFlex'>
+              <input type='file' name='contractDeMunca' id='contractDeMunca' onChange={handleChange} accept='image/*, .pdf'></input>
+              
+               {!file &&
+               <label for='contractDeMunca'>Incarcati CDM!</label>
+               } 
+               
+               {file && 
+              <button onClick={() => handleUpload('contractDeMunca')}>Incarca!</button>
+               }
+              
+            </div>
           </div>
           </motion.div>
         }
@@ -607,7 +613,7 @@ const Home = () => {
             {worker.permis ? 
             <>
               <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti Permis</button>
+              <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti</button>
             </>
 
             :
@@ -637,7 +643,7 @@ const Home = () => {
             {worker.acteStudii ? 
             <>
             <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Acte Studii</button>
+            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Studii</button>
             </>
 
             :
@@ -667,7 +673,7 @@ const Home = () => {
             {worker.fisaPostului ? 
             <>
               <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Fisa Postului</button>
+              <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Postului</button>
             </>
             
             :
@@ -698,7 +704,7 @@ const Home = () => {
             {worker.adeverintaMedicala ? 
             <>
               <iframe src={worker.adeverintaMedicala} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Adeverinta Medicala</button>
+              <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Medicala</button>
             </>
             
             :
@@ -728,7 +734,7 @@ const Home = () => {
             {worker.cazier ? 
             <>
               <iframe src={worker.cazier} title='workerContract'></iframe>
-              <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti Cazier</button>
+              <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti</button>
             </>
             
             :
@@ -748,7 +754,7 @@ const Home = () => {
       </div>
 
       <div>
-        <button onClick={deleteAngajat}>Stergeti Angajat</button>
+        <button onClick={deleteAngajat}>Stergeti</button>
       </div>
       </section>
       </>
