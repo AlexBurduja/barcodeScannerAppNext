@@ -111,12 +111,33 @@ body{
 
 .webHeader {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  position: relative;
   height: 300px;
+  position: relative;
+}
+
+.webHeader h1{
+  color: black;
+  font-weight: bolder;
+  text-align: center;
+  font-size: 6vw;
+}
+
+@media (min-width:600px){
+  .webHeader{
+    flex-direction: row;
+  }
+
+  .webHeader h1{
+    font-size: 1.5vw;
+  }
+}
+
+.webHeader img{
+  height: 20vw;
 }
 
 .webHeader::before {
@@ -131,6 +152,18 @@ body{
   background-repeat: no-repeat;
   background-position: center;
   z-index: -1;
+}
+
+.headerBlurBackground{
+  background-color: rgb(255,255,255,0.4);
+
+  filter: blur(20px);
+  z-index: -1;
+  width: 50%;
+  height: 90%;
+  border-radius: 50px;
+
+  position: absolute;
 }
 
 
@@ -151,6 +184,8 @@ body{
   height: auto;
   max-width: 100%; 
   object-fit: contain;
+  border: 3px solid black;
+  padding: 5px 5px;
 }
 
 .video-container button{

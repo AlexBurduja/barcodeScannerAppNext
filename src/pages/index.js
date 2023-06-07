@@ -395,8 +395,10 @@ const Home = () => {
     <section className='bigMainSection'>
 
 <header className='webHeader'>
-      <Image src={logo} alt='logoMabisWE' width={300} height={300}/>
-      <h1>Baza De Date Angajati MWoodEko</h1>
+      <div className='headerBlurBackground'>
+      </div>
+        <Image src={logo} alt='logoMabisWE' width={300} height={300}/>
+        <h1>Baza De Date Angajati MWoodEko</h1>
   </header>
 
         <div className="barcode-scanner">
