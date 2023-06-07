@@ -395,8 +395,6 @@ const Home = () => {
     <section className='bigMainSection'>
 
 <header className='webHeader'>
-      <div className='headerBlurBackground'>
-      </div>
         <Image src={logo} alt='logoMabisWE' width={300} height={300}/>
         <h1>Baza De Date Angajati MWoodEko</h1>
   </header>
@@ -421,7 +419,7 @@ const Home = () => {
         exit={{opacity: 0}}
         transition={{duration: 0.3}}
         className='modal'>
-          <div className='overlay' onClick={openModal}></div>
+          <div className='modalOverlay' onClick={openModal}></div>
             <div className='modal-content modal1 '>
               <h1>Schimbati Date / Informatii pentru <span className='modal__content__dynamicName'>{worker.nume} ({barcode})</span></h1>
 
@@ -472,7 +470,7 @@ const Home = () => {
         exit={{opacity: 0}}
         transition={{duration: 0.3}}
         className='modal'>
-          <div className='overlay' onClick={openModal2}></div>
+          <div className='modalOverlay' onClick={openModal2}></div>
             <div className='modal-content modal2'>
               <h1>Ce angajat vrei sa adaugi pe codul de bare &quot;<span>{barcode}</span>&quot; ?</h1>
 
@@ -520,12 +518,12 @@ const Home = () => {
     <>
         <section className='workerSection'>
           <div className='workerInfo'>
-            <p>{barcode}</p>
-            <p>Nume: {worker.nume}</p>
-            <p>Stare Civila: {worker.stareCivila}</p>
-            <p>Functie: {worker.job}</p>
-            <p>Copii: {worker.copii}</p>
-            <p>Zile Concediu: {worker.zileConcediu}</p>
+            <p>&quot;{barcode}&quot;</p>
+            <p>Nume: <span>{worker.nume}</span></p>
+            <p>Stare Civila: <span>{worker.stareCivila}</span></p>
+            <p>Functie: <span>{worker.job}</span></p>
+            <p>Copii: <span>{worker.copii}</span></p>
+            <p>Zile Concediu: <span>{worker.zileConcediu}</span></p>
           </div>
 
           <div>
