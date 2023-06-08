@@ -645,7 +645,7 @@ const Home = () => {
             {worker.permis ? 
             <>
               <iframe src={worker.permis} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti</button>
+              <button onClick={() => deleteImagesOrPdfs('permis')}>Stergeti Permis</button>
             </>
 
             :
@@ -687,7 +687,7 @@ const Home = () => {
             {worker.acteStudii ? 
             <>
             <iframe src={worker.acteStudii} title='workerContract' width={900} height={500}></iframe>
-            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Studii</button>
+            <button onClick={() => deleteImagesOrPdfs('acteStudii')}>Stergeti Acte Studii</button>
             </>
 
             :
@@ -728,7 +728,7 @@ const Home = () => {
             {worker.fisaPostului ? 
             <>
               <iframe src={worker.fisaPostului} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Postului</button>
+              <button onClick={() => deleteImagesOrPdfs('fisaPostului')}>Stergeti Fisa Postului</button>
             </>
             
             :
@@ -770,7 +770,7 @@ const Home = () => {
             {worker.adeverintaMedicala ? 
             <>
               <iframe src={worker.adeverintaMedicala} title='workerContract' width={900} height={500}></iframe>
-              <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Medicala</button>
+              <button onClick={() => deleteImagesOrPdfs('adeverintaMedicala')}>Stergeti Adeverinta Medicala</button>
             </>
             
             :
@@ -812,7 +812,7 @@ const Home = () => {
             {worker.cazier ? 
             <>
               <iframe src={worker.cazier} title='workerContract'></iframe>
-              <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti</button>
+              <button onClick={() => deleteImagesOrPdfs('cazier')}>Stergeti Cazier</button>
             </>
             
             :
@@ -822,7 +822,6 @@ const Home = () => {
             </div>
           }
         <div class='fileUploadContainer'>
-
               <input
                 type="file" name="cazier" id="cazier" onChange={handleChange} accept="image/*, .pdf"
                 />
@@ -841,7 +840,7 @@ const Home = () => {
         </AnimatePresence>
       </div>
 
-      <div>
+      <div className='deleteEmployeeButton'>
         <button onClick={deleteAngajat}>Stergeti Angajat</button>
       </div>
       </section>
