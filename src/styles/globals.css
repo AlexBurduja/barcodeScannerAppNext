@@ -287,40 +287,95 @@ canvas{
   align-items: center;
 }
 
-.acteSectionButtons__columnFlex input[type='file'] {
-  display: none;
+input[type=file] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #555;
 }
 
-.acteSectionButtons__columnFlex label {
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: white;
-
-  color: black;
-  cursor: pointer;
-}
-
-.acteSectionButtons__columnFlex input[type='file'] + label {
-  font-size: 16px;
-}
-
-.acteSectionButtons__columnFlex input[type='file'] + label:hover {
-  background-color: #45a049;
-}
-
-.acteSectionButtons__columnFlex button {
-  margin-top: 10px;
-  padding: 10px 15px;
-  background-color: #337ab7;
-  color: white;
+input[type=file]::file-selector-button {
+  margin-right: 20px;
   border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
   cursor: pointer;
+  transition: background .2s ease-in-out;
+  transition: width .2s ease;
+  width: 150px;
 }
 
-.acteSectionButtons__columnFlex button:hover {
-  background-color: #286090;
+input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
 }
 
+.fileUploadContainer{
+  position: relative;
+}
+
+.uploadButton{
+  position: absolute;
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+  transition: width .2s ease;
+  width: 0px;
+  height: 40px;
+  line-height: 1;
+
+  left:6px;
+  
+  font-weight: bold;
+  background-color: red;
+  transition: 1s ease;
+  opacity: 0;
+}
+
+.uploadButtonActive{
+  opacity: 1;
+  width: 50%;
+  background-color: green;
+  transition: 1.5s ease;
+}
+
+.uploadXButton{
+  position: absolute;
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+  transition: width .2s ease;
+  width: 0px;
+  height: 40px;
+  line-height: 1;
+
+  right:-15px;
+  
+  font-weight: bold;
+  background-color: red;
+  transition: 1s ease;
+  opacity: 0;
+}
+
+.uploadXButtonActive{
+  opacity: 1;
+  width: 47%;
+  transition: 1.5s ease;
+}
 /*  */
 
 .turnOffOnButton{

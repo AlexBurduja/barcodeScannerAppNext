@@ -194,6 +194,12 @@ const Home = () => {
     
     function handleChange(event){
       setFile(event.target.files[0])
+      
+      // const uploadBtn = document.getElementById('inputFileUploadBtn')
+      // uploadBtn.classList.add('uploadButtonActive')
+      
+      // const xBtn = document.getElementById('inputFileXBtn')
+      // xBtn.classList.add('uploadXButtonActive')
     }
 
     function handleUpload(value){
@@ -548,9 +554,20 @@ const Home = () => {
               </div>
             }
 
+            <div className="fileUploadContainer">
+              <input
+                type="file" name="c.i." id="c.i." onChange={handleChange} accept="image/*, .pdf"
+              />
           
-            <input type='file' name='ci' id='ci' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('ci')} >Incarcati C.I!</button>
+              
+              <label  for='file' onClick={() => handleUpload('ci')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
+
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+            </div>
           
           </motion.div>
         }
@@ -578,19 +595,28 @@ const Home = () => {
           }
           <div id='acteSectionButtons'>
             <div className='acteSectionButtons__alone'>
+              {worker.contractDeMunca &&
             <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti</button>
+              }
             </div>
 
             <div class='acteSectionButtons__columnFlex'>
-              <input type='file' name='contractDeMunca' id='contractDeMunca' onChange={handleChange} accept='image/*, .pdf'></input>
+
+            <div className="fileUploadContainer">
+              <input
+                type="file" name="contractDeMunca" id="contractDeMunca" onChange={handleChange} accept="image/*, .pdf"
+              />
+          
               
-               {!file &&
-               <label for='contractDeMunca'>Incarcati CDM!</label>
-               } 
-               
-               {file && 
-              <button onClick={() => handleUpload('contractDeMunca')}>Incarca!</button>
-               }
+              <label  for='file' onClick={() => handleUpload('contractDeMunca')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
+
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+
+            </div>
               
             </div>
           </div>
@@ -623,8 +649,20 @@ const Home = () => {
             </div>
             }
 
-            <input type='file' name='permis' id='permis' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('permis')}>Incarcati Permis!</button>
+            <div class='fileUploadContainer'>
+              <input
+                type="file" name="permis" id="permis" onChange={handleChange} accept="image/*, .pdf"
+              />
+          
+              
+              <label  for='file' onClick={() => handleUpload('permis')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
+
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+            </div>
           </motion.div>
         }
         </AnimatePresence>
@@ -652,9 +690,20 @@ const Home = () => {
               <p>Nu exista Acte de Studii.</p>
             </div>
           }
+            <div class='fileUploadContainer'>
+              <input
+                type="file" name="acteStudii" id="acteStudii" onChange={handleChange} accept="image/*, .pdf"
+              />
+          
+              
+              <label  for='file' onClick={() => handleUpload('acteStudii')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
 
-            <input type='file' name='acteStudii' id='acteStudii' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('acteStudii')}>Incarcati Acte Studii!</button>
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+            </div>
           </motion.div>
         }
         </AnimatePresence>
@@ -683,9 +732,20 @@ const Home = () => {
             </div>
           
           }
+            <div class='fileUploadContainer'>
+              <input
+                type="file" name="fisaPostului" id="fisaPostului" onChange={handleChange} accept="image/*, .pdf"
+              />
+          
+              
+              <label  for='file' onClick={() => handleUpload('fisaPostului')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
 
-            <input type='file' name='fisaPostului' id='fisaPostului' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('fisaPostului')}>Incarcati Fisa Postului!</button>
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+            </div>
           </motion.div>
         }
         </AnimatePresence>
@@ -714,8 +774,20 @@ const Home = () => {
             </div>
             }
 
-            <input type='file' name='adeverintaMedicala' id='adeverintaMedicala' onChange={handleChange} accept='image/*, .pdf'></input>
-            <button onClick={() => handleUpload('adeverintaMedicala')}>Incarcati Adeverinta Medicala!</button>
+            <div class='fileUploadContainer'>
+              <input
+                type="file" name="adeverintaMedicala" id="adeverintaMedicala" onChange={handleChange} accept="image/*, .pdf"
+              />
+          
+              
+              <label  for='file' onClick={() => handleUpload('adeverintaMedicala')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
+
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+            </div>
           </motion.div>
         }
         </AnimatePresence>
@@ -743,18 +815,28 @@ const Home = () => {
               <p>Nu exista Cazier.</p>
             </div>
           }
+        <div class='fileUploadContainer'>
 
-            <input type='file' name='cazier' id='cazier' onChange={handleChange} accept='image/*, .pdf'></input>
-            {file && 
-            <button onClick={() => handleUpload('cazier')}>Incarcati Cazier!</button>
-            }
+              <input
+                type="file" name="cazier" id="cazier" onChange={handleChange} accept="image/*, .pdf"
+                />
+          
+              
+              <label  for='file' onClick={() => handleUpload('cazier')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+                {file ? 'Upload!' : ''} 
+              </label>
+
+              <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
+                {file ? 'X' : ''}
+              </label>
+        </div>
           </motion.div>
         }
         </AnimatePresence>
       </div>
 
       <div>
-        <button onClick={deleteAngajat}>Stergeti</button>
+        <button onClick={deleteAngajat}>Stergeti Angajat</button>
       </div>
       </section>
       </>
