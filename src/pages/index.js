@@ -122,6 +122,8 @@ const Home = () => {
 
   function openSection (section) {
     setIsOpen(section === isOpen ? null : section)
+
+    setFile('')
   }
 
   useEffect(() => {
@@ -195,11 +197,12 @@ const Home = () => {
     function handleChange(event){
       setFile(event.target.files[0])
       
-      // const uploadBtn = document.getElementById('inputFileUploadBtn')
-      // uploadBtn.classList.add('uploadButtonActive')
-      
-      // const xBtn = document.getElementById('inputFileXBtn')
-      // xBtn.classList.add('uploadXButtonActive')
+    }
+
+    function handleClearFile() {
+      setFile('')
+      const input = document.getElementById('permis');
+      input.parentNode.replaceChild(input.cloneNode(true), input);
     }
 
     function handleUpload(value){
@@ -386,8 +389,10 @@ const Home = () => {
       setWorker([])
     }
 
-  
-    console.log(file)
+  console.log(file)
+
+  const fileInputRef = useRef(null)
+
 
   return (
       <div className='colorSection'>
@@ -554,7 +559,7 @@ const Home = () => {
               </div>
             }
 
-            <div className="fileUploadContainer">
+<div className="fileUploadContainer">
               <input
                 type="file" name="c.i." id="c.i." onChange={handleChange} accept="image/*, .pdf"
               />
@@ -567,6 +572,7 @@ const Home = () => {
               <label for='file' onClick={() => setFile('')} className={file ? 'uploadXButton uploadXButtonActive' : 'uploadXButton'} id='inputFileXBtn'>
                 {file ? 'X' : ''}
               </label>
+
             </div>
           
           </motion.div>
@@ -596,7 +602,7 @@ const Home = () => {
           <div id='acteSectionButtons'>
             <div className='acteSectionButtons__alone'>
               {worker.contractDeMunca &&
-            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti</button>
+            <button onClick={() => deleteImagesOrPdfs('contractDeMunca')}>Stergeti Contract de Munca!</button>
               }
             </div>
 
@@ -655,7 +661,7 @@ const Home = () => {
               />
           
               
-              <label  for='file' onClick={() => handleUpload('permis')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn'>
+              <label  for='file' onClick={() => handleUpload('permis')} className={file ? " uploadButton uploadButtonActive" : 'uploadButton'} id='inputFileUploadBtn' ref={fileInputRef}>
                 {file ? 'Upload!' : ''} 
               </label>
 

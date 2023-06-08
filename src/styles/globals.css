@@ -243,6 +243,11 @@ canvas{
   color: red;
 }
 
+.acteSectionButtons__alone p{
+  width: 300px;
+
+}
+
   .acteActionP:hover{
     background-color: rgba(255,255,255,0.8);
     color: black;
@@ -288,7 +293,7 @@ canvas{
 }
 
 input[type=file] {
-  width: 350px;
+  width: 300px;
   max-width: 100%;
   color: #444;
   padding: 5px;
@@ -595,5 +600,9 @@ input[type=file]::file-selector-button:hover {
   .workerSection{
     flex-direction: column;
     gap: 20px;
+  }
+
+  .workerSection div button{
+    font-size: 5.5vw;
   }
 }
