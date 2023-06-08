@@ -243,9 +243,8 @@ canvas{
   color: red;
 }
 
-.acteSectionButtons__alone p{
-  width: 300px;
-
+.acteSection div .acteSectionButtons__alone button{
+  width: 90%;
 }
 
   .acteActionP:hover{
@@ -264,13 +263,21 @@ canvas{
 
 .acteSection div button {
   width: 200px;
-  height: 50px;
+  height: 70px;
   font-weight: bold;
-  color: white;
-  background-color: black;
-  border: 1px solid white;
+  color: black;
+  background-color: transparent;
+  border: 3px solid black;
   border-radius: 20px;
   cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.acteSection div button:hover{
+  transition: 0.5s ease;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  color: white;
+  font-weight: bold;
 }
 
 .acteSection div iframe{
