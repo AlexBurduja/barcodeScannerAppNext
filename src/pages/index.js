@@ -243,6 +243,7 @@ const Home = () => {
 
     const [modal, setModal] = useState(false)
     const [modal2, setModal2] = useState(false)
+    const [modal3, setModal3] = useState(false)
 
     function openModal() {
       setModal(!modal)
@@ -255,6 +256,12 @@ const Home = () => {
       setModal2(!modal2)
 
       modal2 === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
+    }
+
+    function openModal3(){
+      setModal3(!modal3)
+
+      modal3 === false ? document.body.classList.add('modal-open') : document.body.classList.remove('modal-open')
     }
 
     const [initialName, setInitialName] = useState(worker.name);
@@ -841,8 +848,30 @@ const Home = () => {
       </div>
 
       <div className='deleteEmployeeButton'>
-        <button onClick={deleteAngajat}>Stergeti Angajat</button>
+        <button onClick={openModal3}>Stergeti Angajat</button>
       </div>
+
+      <AnimatePresence >
+      {modal3 && (
+        <motion.div 
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        exit={{opacity: 0}}
+        transition={{duration: 0.3}}
+        className='modal'>
+          <div className='modalOverlay' onClick={openModal3}></div>
+            <div className='modal-content modal3'>
+              <p>Sunteti sigur ca doriti sa stergeti angajatul {worker.name} ({barcode}) ? </p>
+
+              <div id='modal3Buttons'>
+                <button onClick={deleteAngajat}>Da</button>
+                <button onClick={openModal3}>Nu</button>
+              </div>
+            </div>
+            </motion.div>
+        )
+      }
+      </AnimatePresence>
       </section>
       </>
       )}

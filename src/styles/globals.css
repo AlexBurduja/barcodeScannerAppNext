@@ -592,6 +592,65 @@ input[type=file]::file-selector-button:hover {
   color: rgb(0, 255, 0);
 }
 
+div .deleteEmployeeButton button{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: white;
+  border: 1px solid black;
+  cursor: pointer;
+  width: 90%;
+  max-width: 300px;
+  font-size: 25px;
+}
+
+div .deleteEmployeeButton button:hover{
+  color: red;
+  border: 1px solid red;
+}
+
+.modal3 p{
+  color: black;
+  font-weight: bold;
+}
+
+.modal-content.modal3{
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#modal3Buttons{
+  display: flex;
+  flex-direction: row;
+  color: red;
+  width: 100%;
+}
+
+#modal3Buttons button{
+  width: 90%;
+  max-width: 200px; 
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background: linear-gradient(135deg,#000c40,#2b2be6);
+  height: 55px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 20px;
+  color: white;
+}
+
+#modal3Buttons button:hover{
+  transition: 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+div #acteSectionButtons{
+  display: flex;
+  flex-direction: row;
+}
+
 @media (max-width: 700px) {
 
   .modal-content {
