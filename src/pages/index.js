@@ -403,16 +403,15 @@ const Home = () => {
 
   const [response, setResponse] = useState(null);
 
-  const generateAwb = async () => {
-      try {
-        const url = 'https://api.fancourier.ro/intern-awb';
-        const payload = {
-          clientId: 7253252,
-          shipments: [
-            {
-              info: {
-                service: 'Standard', // Example service value
-                bank: 'Example Bank',
+  const generateAWB = async () => {
+    try {
+      const response = await axios.post('/api/fancourier', {
+        clientId: 7253252,
+        shipments: [
+          {
+            info: {
+              service: '',
+              bank: 'Example Bank',
                 bankAccount: '1234567890',
                 packages: {
                   parcel: 1,
@@ -433,31 +432,29 @@ const Home = () => {
                 },
                 costCenter: 'Example cost center',
                 options: ['V'],
-              },
-              recipient: {
-                name: 'John Doe',
-                phone: '1234567890',
-                email: 'johndoe@example.com',
-                address: {
-                  county: 'Bucharest',
-                  locality: 'Bucharest',
-                  street: 'Example Street',
-                  streetNo: '123',
-                  pickupLocation: '',
-                  zipCode: '12345',
-                },
-              },
             },
-          ],
-        };
+            recipient: {
+              name: 'John Doe',
+              phone: '1234567890',
+              email: 'johndoe@example.com',
+              address: {
+              county: 'Bucharest',
+              locality: 'Bucharest',
+              street: 'Example Street',
+              streetNo: '123',
+              pickupLocation: '',
+              zipCode: '12345',
+            },
+          },
+          },
+        ],
+      });
   
-        const response = await axios.post(url, payload);
-        setResponse(response.data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    
-  }
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
       <div className='colorSection'>
