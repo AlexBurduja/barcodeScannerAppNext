@@ -459,6 +459,14 @@ const Home = () => {
   return (
       <div className='colorSection'>
         <div className="overlay"></div>
+
+        <div>
+        <button onClick={generateAWB}>Generate Awb</button>
+        {response && (
+          <pre>{JSON.stringify(response, null, 2)}</pre>
+        )}
+      </div>
+
     <section className='bigMainSection'>
 
 <header className='webHeader'>
@@ -904,13 +912,6 @@ const Home = () => {
 
       <div className='deleteEmployeeButton'>
         <button onClick={openModal3}>Stergeti Angajat</button>
-      </div>
-
-      <div>
-        <buton onClick={generateAWB}>Generate Awb</buton>
-        {response && (
-          <pre>{JSON.stringify(response, null, 2)}</pre>
-        )}
       </div>
 
       <AnimatePresence >
