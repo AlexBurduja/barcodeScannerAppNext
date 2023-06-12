@@ -7,6 +7,7 @@ import {IoMdReverseCamera} from 'react-icons/io'
 import {AnimatePresence, motion} from 'framer-motion'
 import Image from 'next/image';
 import logo from '../../public/logoMabis.svg';
+import axios from 'axios';
 
 const Home = () => {
   const videoRef = useRef(null);
