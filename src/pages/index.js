@@ -907,7 +907,7 @@ const Home = () => {
       </div>
 
       <div>
-        <buton onClick={generateAwb}>Generate Awb</buton>
+        <buton onClick={generateAWB}>Generate Awb</buton>
         {response && (
           <pre>{JSON.stringify(response, null, 2)}</pre>
         )}
