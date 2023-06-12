@@ -405,7 +405,7 @@ const Home = () => {
 
   const generateAwb = async () => {
       try {
-        const url = 'https://api.fancourier.ro/intern-awb';
+        const url = 'https://cors-anywhere.herokuapp.com/https://api.fancourier.ro/intern-awb';
         const payload = {
           clientId: 7253252,
           shipments: [
