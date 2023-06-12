@@ -400,6 +400,63 @@ const Home = () => {
 
   const fileInputRef = useRef(null)
 
+  const [response, setResponse] = useState(null);
+
+  const generateAwb = async () => {
+      try {
+        const url = 'https://api.fancourier.ro/intern-awb';
+        const payload = {
+          clientId: 7253252,
+          shipments: [
+            {
+              info: {
+                service: 'Standard', // Example service value
+                bank: 'Example Bank',
+                bankAccount: '1234567890',
+                packages: {
+                  parcel: 1,
+                  envelopes: 0,
+                },
+                weight: 2,
+                cod: 0,
+                declaredValue: 0,
+                payment: 'Cash',
+                refund: 'Bank Transfer',
+                returnPayment: 'Cash',
+                observation: 'Example observation',
+                content: 'Example content',
+                dimensions: {
+                  length: 10,
+                  height: 20,
+                  width: 30,
+                },
+                costCenter: 'Example cost center',
+                options: ['V'],
+              },
+              recipient: {
+                name: 'John Doe',
+                phone: '1234567890',
+                email: 'johndoe@example.com',
+                address: {
+                  county: 'Bucharest',
+                  locality: 'Bucharest',
+                  street: 'Example Street',
+                  streetNo: '123',
+                  pickupLocation: '',
+                  zipCode: '12345',
+                },
+              },
+            },
+          ],
+        };
+  
+        const response = await axios.post(url, payload);
+        setResponse(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    
+  }
 
   return (
       <div className='colorSection'>
@@ -849,6 +906,13 @@ const Home = () => {
 
       <div className='deleteEmployeeButton'>
         <button onClick={openModal3}>Stergeti Angajat</button>
+      </div>
+
+      <div>
+        <buton onClick={generateAwb}>Generate Awb</buton>
+        {response && (
+          <pre>{JSON.stringify(response, null, 2)}</pre>
+        )}
       </div>
 
       <AnimatePresence >
