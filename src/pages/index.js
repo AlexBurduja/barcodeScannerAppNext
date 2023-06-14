@@ -455,22 +455,61 @@ const Home = () => {
     //   console.error('Error:', error);
     // }
 
-    fetch('https://api.fancourier.ro/login', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  body: 'username=clienttest&password=testing'
-})
-  .then(response => response.json())
-  .then(data => {
-    // Handle the response data, which should contain the token
-    console.log(data.token);
-  })
-  .catch(error => {
-    // Handle any errors that occurred during the request
-    console.error(error);
-  });
+    const params = {
+      clientId: 7253252,
+      shipments: [
+        {
+          info: {
+            service: 'Cont Colector',
+            bank: '',
+            bankAccount: '',
+            packages: { parcel: 1, envelopes: 0 },
+            weight: 2,
+            cod: 1000,
+            declaredValue: 1000,
+            payment: 'sender',
+            refund: null,
+            returnPayment: null,
+            observation: 'Observatie',
+            content: 'Comanda #346',
+            dimensions: { length: 1, height: 2, width: 3 },
+            costCenter: 'DEP IT',
+            options: ['X'],
+          },
+          recipient: {
+            name: 'Nume Destinatar',
+            phone: '0723456789',
+            email: 'adresa@email.com',
+            address: {
+              county: 'Bucuresti',
+              locality: 'Bucuresti',
+              street: 'Fabrica de Glucoza',
+              streetNo: '11C',
+              zipCode: '020331',
+            },
+          },
+        },
+      ],
+    };
+    
+    fetch('https://api.fancourier.ro/intern-awb', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer 2364|b3oQgYrcUIoo19uWazcwsl8211tHPMMKj9HKm2z9',
+      },
+      body: JSON.stringify(params),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Handle the response data here
+      })
+      .catch(error => {
+        console.error(error);
+        // Handle any errors that occurred during the request
+      });
+    
   };
 
   return (
