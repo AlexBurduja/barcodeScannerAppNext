@@ -455,42 +455,54 @@ const Home = () => {
     //   console.error('Error:', error);
     // }
 
-    const params = {
-      clientId: 7253252,
-      shipments: [
-        {
-          info: {
-            service: 'Cont Colector',
-            bank: '',
-            bankAccount: '',
-            packages: { parcel: 1, envelopes: 0 },
-            weight: 2,
-            cod: 1000,
-            declaredValue: 1000,
-            payment: 'sender',
-            refund: null,
-            returnPayment: null,
-            observation: 'Observatie',
-            content: 'Comanda #346',
-            dimensions: { length: 1, height: 2, width: 3 },
-            costCenter: 'DEP IT',
-            options: ['X'],
-          },
-          recipient: {
-            name: 'Nume Destinatar',
-            phone: '0723456789',
-            email: 'adresa@email.com',
-            address: {
-              county: 'Bucuresti',
-              locality: 'Bucuresti',
-              street: 'Fabrica de Glucoza',
-              streetNo: '11C',
-              zipCode: '020331',
-            },
-          },
-        },
-      ],
-    };
+    // const params = {
+    //   {
+    //     "clientId": 7253252,
+    //     "shipments": [
+    //       {
+    //         "info": {
+    //           "service": "Standard", 
+    //           "bank": "",
+    //           "bankAccount": "",
+    //           "packages": {
+    //             "parcel": 1,
+    //             "envelopes": 0
+    //           },
+    //           "weight": 2,
+    //           "cod": 0,
+    //           "declaredValue": 0,
+    //           "payment": "sender",
+    //           "refund": "",
+    //           "returnPayment": "recipient",
+    //           "observation": "Some observation",
+    //           "content": "",
+    //           "dimensions": {
+    //             "length": 1,
+    //             "height": 2,
+    //             "width": 3
+    //           },
+    //           "costCenter": "",
+    //           "options": [
+    //             "X"
+    //           ]
+    //         },
+    //         "recipient": {
+    //           "name": "John Doe",
+    //           "phone": "+1234567890",
+    //           "email": "johndoe@example.com",
+    //           "address": {
+    //             "county": "Bucuresti",
+    //             "locality": "Bucuresti",
+    //             "street": "Fabrica de Glucoza",
+    //             "streetNo": "13",
+    //             "zipCode": "022843"
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   }
+      
+    // };
     
     fetch('https://api.fancourier.ro/intern-awb', {
       method: 'POST',
@@ -498,7 +510,52 @@ const Home = () => {
         'Content-Type': 'application/json',
         Authorization: 'Bearer 2364|b3oQgYrcUIoo19uWazcwsl8211tHPMMKj9HKm2z9',
       },
-      body: JSON.stringify(params),
+      body: {
+        "clientId": 7253252,
+        "shipments": [
+          {
+            "info": {
+              "service": "Standard", 
+              "bank": "",
+              "bankAccount": "",
+              "packages": {
+                "parcel": 1,
+                "envelopes": 0
+              },
+              "weight": 2,
+              "cod": 0,
+              "declaredValue": 0,
+              "payment": "sender",
+              "refund": "",
+              "returnPayment": "recipient",
+              "observation": "Some observation",
+              "content": "",
+              "dimensions": {
+                "length": 1,
+                "height": 2,
+                "width": 3
+              },
+              "costCenter": "",
+              "options": [
+                "X"
+              ]
+            },
+            "recipient": {
+              "name": "John Doe",
+              "phone": "+1234567890",
+              "email": "johndoe@example.com",
+              "address": {
+                "county": "Bucuresti",
+                "locality": "Bucuresti",
+                "street": "Fabrica de Glucoza",
+                "streetNo": "13",
+                "zipCode": "022843"
+              }
+            }
+          }
+        ]
+      }
+      ,
     })
       .then(response => response.json())
       .then(data => {
