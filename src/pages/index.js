@@ -455,10 +455,22 @@ const Home = () => {
     //   console.error('Error:', error);
     // }
 
-    fetch('https://api.fancourier.ro/login?username=clienttest&password=testing')
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error(error));
+    fetch('https://api.fancourier.ro/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: 'username=clienttest&password=testing'
+})
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response data, which should contain the token
+    console.log(data.token);
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the request
+    console.error(error);
+  });
   };
 
   return (
