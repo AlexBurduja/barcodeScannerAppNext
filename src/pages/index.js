@@ -404,56 +404,61 @@ const Home = () => {
   const [response, setResponse] = useState(null);
 
   const generateAWB = async () => {
-    try {
-      const response = await axios.post('/api/fancourier', {
-        clientId: 7253252,
-        shipments: [
-          {
-            info: {
-              service: '',
-              bank: 'Example Bank',
-                bankAccount: '1234567890',
-                packages: {
-                  parcel: 1,
-                  envelopes: 0,
-                },
-                weight: 2,
-                cod: 0,
-                declaredValue: 0,
-                payment: 'Cash',
-                refund: 'Bank Transfer',
-                returnPayment: 'Cash',
-                observation: 'Example observation',
-                content: 'Example content',
-                dimensions: {
-                  length: 10,
-                  height: 20,
-                  width: 30,
-                },
-                costCenter: 'Example cost center',
-                options: ['V'],
-            },
-            recipient: {
-              name: 'John Doe',
-              phone: '1234567890',
-              email: 'johndoe@example.com',
-              address: {
-              county: 'Bucharest',
-              locality: 'Bucharest',
-              street: 'Example Street',
-              streetNo: '123',
-              pickupLocation: '',
-              zipCode: '12345',
-            },
-          },
-          },
-        ],
-      });
+    // try {
+    //   const response = await axios.post('/api/fancourier', {
+    //     clientId: 7253252,
+    //     shipments: [
+    //       {
+    //         info: {
+    //           service: '',
+    //           bank: 'Example Bank',
+    //             bankAccount: '1234567890',
+    //             packages: {
+    //               parcel: 1,
+    //               envelopes: 0,
+    //             },
+    //             weight: 2,
+    //             cod: 0,
+    //             declaredValue: 0,
+    //             payment: 'Cash',
+    //             refund: 'Bank Transfer',
+    //             returnPayment: 'Cash',
+    //             observation: 'Example observation',
+    //             content: 'Example content',
+    //             dimensions: {
+    //               length: 10,
+    //               height: 20,
+    //               width: 30,
+    //             },
+    //             costCenter: 'Example cost center',
+    //             options: ['V'],
+    //         },
+    //         recipient: {
+    //           name: 'John Doe',
+    //           phone: '1234567890',
+    //           email: 'johndoe@example.com',
+    //           address: {
+    //           county: 'Bucharest',
+    //           locality: 'Bucharest',
+    //           street: 'Example Street',
+    //           streetNo: '123',
+    //           pickupLocation: '',
+    //           zipCode: '12345',
+    //         },
+    //       },
+    //       },
+    //     ],
+    //   });
   
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
+
+    fetch('https://api.fancourier.ro/login?username=clienttest&password=testing')
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error(error));
   };
 
   return (
@@ -461,7 +466,7 @@ const Home = () => {
         <div className="overlay"></div>
 
         <div>
-        <button onClick={generateAWB}>Generate Awb</button>
+        <button style={{width: '300px', height: '200px'}} onClick={generateAWB}>Generate Awb</button>
         {response && (
           <pre>{JSON.stringify(response, null, 2)}</pre>
         )}
